@@ -1,4 +1,4 @@
-# Gospel Parallels — yhwy.org
+# Gospel Parallels — gospel.yhwh.rest
 
 Soli Deo gloria. Made for Darrell W. Johnson.
 
@@ -45,9 +45,14 @@ node scripts/build-gospel-text.mjs engwebp_vpl/engwebp_vpl.txt
 ## Hosting
 
 GitHub Pages, deployed by `.github/workflows/deploy.yml` on every push to
-`main` (tests must pass first). `public/CNAME` sets the custom domain. DNS for
-yhwy.org lives at Namecheap: four `A` records on `@` pointing at GitHub Pages
-and a `CNAME` for `www`.
+`main` (tests must pass first). The custom domain is set in the repo's Pages
+settings; `public/CNAME` records it but Actions-based deploys ignore the file.
+
+DNS for yhwh.rest is on Cloudflare: `gospel` is a `CNAME` to
+`yhwyorg.github.io`, and must stay **DNS only** (grey cloud). With the proxy on,
+GitHub cannot issue or renew its HTTPS certificate. yhwh.rest is verified for
+the yhwyorg org (`_github-pages-challenge-yhwyorg` TXT record), which is what
+got certificate issuance unstuck on the previous domain.
 
 ## History
 
