@@ -1,6 +1,6 @@
 # Gospel Parallels — yhwy.org
 
-Made for Darrell W. Johnson.
+Soli Deo gloria. Made for Darrell W. Johnson.
 
 Read Matthew, Mark, Luke and John side by side. Pick a section or type any
 passage (`Luke 15:11-32`, `Jn 3:16`) to see every account of it in parallel

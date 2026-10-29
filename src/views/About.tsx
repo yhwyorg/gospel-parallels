@@ -9,10 +9,27 @@ export default function About() {
   return (
     <article className="about">
       <section className="dedication">
-        <h1>About</h1>
+        <p className="soli">Soli Deo gloria</p>
+        <h1>About this site</h1>
         <p>
-          Made for Darrell W. Johnson, who has been preaching the gospel for more than fifty years.{' '}
-          <a href="https://www.darrelljohnson.ca/">darrelljohnson.ca</a>
+          This site is offered to bless God Almighty, whose Word it sets before the reader, and whose Son these four
+          Gospels proclaim.
+        </p>
+        <p>
+          It was made for Darrell W. Johnson, who has been preaching Jesus Christ and his gospel for more than fifty
+          years: as a pastor in California, at Union Church of Manila and at First Baptist Church in Vancouver, and as
+          a teacher of preachers at Fuller Theological Seminary, Regent College and Carey Theological College. Today he
+          serves at The Way Church and with The Pastorate Ministries Canada. He is the author of{' '}
+          <cite>The Glory of Preaching</cite>, <cite>Who Is Jesus?</cite>, <cite>Jesus the Healer</cite>,{' '}
+          <cite>The Beatitudes</cite> and other books.
+        </p>
+        <p>
+          His preaching begins where this tool does: by staying with the text, and letting it say what it says. The
+          site grew out of a project Darrell and his family began together, comparing the order of events in Matthew,
+          Mark and Luke with the order in John.
+        </p>
+        <p>
+          <a href="https://www.darrelljohnson.ca/">Darrell’s sermons, books and teaching →</a>
         </p>
       </section>
 
