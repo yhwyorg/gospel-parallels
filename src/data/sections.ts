@@ -30,7 +30,7 @@ const LONGER_ENDING =
 export const sections: Section[] = [
   // Beginnings
   { id: 'prologue-word', title: 'The Word became flesh', refs: { john: '1:1-18' } },
-  { id: 'luke-preface', title: "Luke's preface to Theophilus", refs: { luke: '1:1-4' } },
+  { id: 'luke-preface', title: "Luke’s preface to Theophilus", refs: { luke: '1:1-4' } },
   { id: 'john-birth-foretold', title: 'Birth of John the Baptist foretold', refs: { luke: '1:5-25' } },
   { id: 'annunciation', title: 'The angel Gabriel comes to Mary', refs: { luke: '1:26-38' } },
   { id: 'magnificat', title: 'Mary visits Elizabeth; the Magnificat', refs: { luke: '1:39-56' } },
@@ -59,13 +59,13 @@ export const sections: Section[] = [
     id: 'baptist-imprisoned',
     title: 'John the Baptist imprisoned',
     refs: { luke: '3:19-20' },
-    note: "Luke closes John's story before Jesus' baptism. Matthew and Mark tell of the arrest later, as a flashback (Matthew 14:3-5; Mark 6:17-20).",
+    note: "Luke closes John’s story before Jesus’ baptism. Matthew and Mark tell of the arrest later, as a flashback (Matthew 14:3-5; Mark 6:17-20).",
   },
   {
     id: 'baptism',
     title: 'The baptism of Jesus',
     refs: { matthew: '3:13-17', mark: '1:9-11', luke: '3:21-22', john: '1:29-34' },
-    note: "John's Gospel does not narrate the baptism itself; it gives John the Baptist's testimony that he saw the Spirit descend and remain on Jesus.",
+    note: "John’s Gospel does not narrate the baptism itself; it gives John the Baptist’s testimony that he saw the Spirit descend and remain on Jesus.",
   },
   { id: 'temptation', title: 'The temptation in the wilderness', refs: { matthew: '4:1-11', mark: '1:12-13', luke: '4:1-13' } },
 
@@ -76,10 +76,10 @@ export const sections: Section[] = [
     id: 'temple-cleansing',
     title: 'The cleansing of the temple',
     refs: { matthew: '21:12-17', mark: '11:15-19', luke: '19:45-48', john: '2:13-22' },
-    note: "John places this at the first Passover of Jesus' ministry (John 2:13). Matthew, Mark and Luke place it in the final week, just after the entry into Jerusalem.",
+    note: "John places this at the first Passover of Jesus’ ministry (John 2:13). Matthew, Mark and Luke place it in the final week, just after the entry into Jerusalem.",
   },
   { id: 'nicodemus', title: 'Jesus and Nicodemus', refs: { john: '2:23-3:21' } },
-  { id: 'baptist-final-testimony', title: "John the Baptist's final testimony", refs: { john: '3:22-36' } },
+  { id: 'baptist-final-testimony', title: "John the Baptist’s final testimony", refs: { john: '3:22-36' } },
   { id: 'samaritan-woman', title: 'The woman of Samaria', refs: { john: '4:1-42' } },
 
   // Galilee
@@ -90,26 +90,26 @@ export const sections: Section[] = [
   },
   {
     id: 'officials-son',
-    title: "Healing of the official's son",
+    title: "Healing of the official’s son",
     refs: { john: '4:46-54' },
-    note: "Often compared with the healing of the centurion's servant (Matthew 8:5-13; Luke 7:1-10): a healing at a distance, at Capernaum, for a man in authority.",
+    note: "Often compared with the healing of the centurion’s servant (Matthew 8:5-13; Luke 7:1-10): a healing at a distance, at Capernaum, for a man in authority.",
   },
   {
     id: 'nazareth-rejection',
     title: 'Rejection at Nazareth',
     refs: { matthew: '13:53-58', mark: '6:1-6', luke: '4:16-30' },
-    note: "Luke moves this scene to the opening of Jesus' public ministry, where his reading of Isaiah 61 sets out the shape of all that follows. Matthew and Mark place it well into the Galilean ministry.",
+    note: "Luke moves this scene to the opening of Jesus’ public ministry, where his reading of Isaiah 61 sets out the shape of all that follows. Matthew and Mark place it well into the Galilean ministry.",
   },
   {
     id: 'calling-fishermen',
     title: 'Calling of the first disciples',
     refs: { matthew: '4:18-22', mark: '1:16-20', luke: '5:1-11' },
-    note: "Luke's account includes the great catch of fish and comes after Jesus has already healed Simon's mother-in-law (Luke 4:38-39). John 1:35-51 describes an earlier meeting.",
+    note: "Luke’s account includes the great catch of fish and comes after Jesus has already healed Simon’s mother-in-law (Luke 4:38-39). John 1:35-51 describes an earlier meeting.",
   },
   { id: 'capernaum-synagogue', title: 'Teaching in the synagogue at Capernaum', refs: { mark: '1:21-28', luke: '4:31-37' } },
   {
     id: 'peters-mother-in-law',
-    title: "Healing of Peter's mother-in-law; healings at evening",
+    title: "Healing of Peter’s mother-in-law; healings at evening",
     refs: { matthew: '8:14-17', mark: '1:29-34', luke: '4:38-41' },
   },
   { id: 'preaching-tour', title: 'A preaching tour of Galilee', refs: { matthew: '4:23-25', mark: '1:35-39', luke: '4:42-44' } },
@@ -129,7 +129,7 @@ export const sections: Section[] = [
     id: 'beatitudes',
     title: 'The Beatitudes',
     refs: { matthew: '5:1-12', luke: '6:20-26' },
-    note: 'Matthew sets the sermon on a mountain; Luke on "a level place" (Luke 6:17). Luke pairs four blessings with four woes.',
+    note: 'Matthew sets the sermon on a mountain; Luke on “a level place” (Luke 6:17). Luke pairs four blessings with four woes.',
   },
   { id: 'salt-light', title: 'Salt and light', refs: { matthew: '5:13-16' } },
   { id: 'law-fulfilled', title: 'Jesus fulfills the Law', refs: { matthew: '5:17-20' } },
@@ -138,9 +138,9 @@ export const sections: Section[] = [
   { id: 'piety-in-secret', title: 'Giving, praying and fasting in secret', refs: { matthew: '6:1-8; 6:16-18' } },
   {
     id: 'lords-prayer',
-    title: "The Lord's Prayer",
+    title: "The Lord’s Prayer",
     refs: { matthew: '6:9-15', luke: '11:1-4' },
-    note: 'Matthew places the prayer within the Sermon on the Mount; Luke has Jesus give it on the journey, when a disciple asks, "Lord, teach us to pray."',
+    note: 'Matthew places the prayer within the Sermon on the Mount; Luke has Jesus give it on the journey, when a disciple asks, “Lord, teach us to pray”.',
   },
   { id: 'treasure-heaven', title: 'Treasure in heaven', refs: { matthew: '6:19-21' } },
   { id: 'lamp-of-body', title: 'The lamp of the body', refs: { matthew: '6:22-23', luke: '11:33-36' } },
@@ -151,9 +151,9 @@ export const sections: Section[] = [
   { id: 'two-foundations', title: 'Two ways, two trees, two foundations', refs: { matthew: '7:13-29', luke: '6:43-49' } },
 
   // Galilee, continued
-  { id: 'centurion', title: "Healing of the centurion's servant", refs: { matthew: '8:5-13', luke: '7:1-10' } },
+  { id: 'centurion', title: "Healing of the centurion’s servant", refs: { matthew: '8:5-13', luke: '7:1-10' } },
   { id: 'widow-nain', title: 'Raising of the widow\'s son at Nain', refs: { luke: '7:11-17' } },
-  { id: 'baptist-question', title: "John the Baptist's question; Jesus' witness to John", refs: { matthew: '11:2-19', luke: '7:18-35' } },
+  { id: 'baptist-question', title: "John the Baptist’s question; Jesus’ witness to John", refs: { matthew: '11:2-19', luke: '7:18-35' } },
   {
     id: 'sinful-woman',
     title: 'A sinful woman anoints Jesus',
@@ -162,12 +162,12 @@ export const sections: Section[] = [
   },
   { id: 'women-followers', title: 'Women who followed Jesus', refs: { luke: '8:1-3' } },
   { id: 'woes-cities', title: 'Woes on the cities of Galilee', refs: { matthew: '11:20-24', luke: '10:13-15' } },
-  { id: 'thanksgiving', title: "Jesus' thanksgiving; come to me", refs: { matthew: '11:25-30', luke: '10:21-24' } },
+  { id: 'thanksgiving', title: "Jesus’ thanksgiving; come to me", refs: { matthew: '11:25-30', luke: '10:21-24' } },
   { id: 'beelzebul', title: 'The Beelzebul controversy', refs: { matthew: '12:22-37', mark: '3:20-30', luke: '11:14-23; 12:10' } },
   { id: 'sign-of-jonah', title: 'The sign of Jonah', refs: { matthew: '12:38-42', luke: '11:29-32' } },
   { id: 'unclean-spirit-returns', title: 'The return of the unclean spirit', refs: { matthew: '12:43-45', luke: '11:24-26' } },
   { id: 'true-blessedness', title: 'True blessedness', refs: { luke: '11:27-28' } },
-  { id: 'true-family', title: "Jesus' true family", refs: { matthew: '12:46-50', mark: '3:31-35', luke: '8:19-21' } },
+  { id: 'true-family', title: "Jesus’ true family", refs: { matthew: '12:46-50', mark: '3:31-35', luke: '8:19-21' } },
 
   // Parables of the kingdom
   { id: 'sower', title: 'The parable of the sower', refs: { matthew: '13:1-9', mark: '4:1-9', luke: '8:4-8' } },
@@ -177,7 +177,7 @@ export const sections: Section[] = [
   { id: 'seed-growing', title: 'The seed growing by itself', refs: { mark: '4:26-29' } },
   { id: 'weeds', title: 'The wheat and the weeds', refs: { matthew: '13:24-30' } },
   { id: 'mustard-leaven', title: 'The mustard seed and the leaven', refs: { matthew: '13:31-33', mark: '4:30-32', luke: '13:18-21' } },
-  { id: 'use-of-parables', title: "Jesus' use of parables", refs: { matthew: '13:34-35', mark: '4:33-34' } },
+  { id: 'use-of-parables', title: "Jesus’ use of parables", refs: { matthew: '13:34-35', mark: '4:33-34' } },
   { id: 'weeds-explained', title: 'The weeds explained', refs: { matthew: '13:36-43' } },
   { id: 'treasure-pearl-net', title: 'Hidden treasure, the pearl, the net', refs: { matthew: '13:44-52' } },
 
@@ -185,7 +185,7 @@ export const sections: Section[] = [
   { id: 'would-be-followers', title: 'Would-be followers', refs: { matthew: '8:18-22', luke: '9:57-62' } },
   { id: 'calming-storm', title: 'Calming the storm', refs: { matthew: '8:23-27', mark: '4:35-41', luke: '8:22-25' } },
   { id: 'gerasene', title: 'The Gerasene demoniac', refs: { matthew: '8:28-34', mark: '5:1-20', luke: '8:26-39' } },
-  { id: 'jairus', title: "Jairus' daughter and the woman who touched his cloak", refs: { matthew: '9:18-26', mark: '5:21-43', luke: '8:40-56' } },
+  { id: 'jairus', title: "Jairus’ daughter and the woman who touched his cloak", refs: { matthew: '9:18-26', mark: '5:21-43', luke: '8:40-56' } },
   { id: 'two-blind-mute', title: 'Two blind men; a man unable to speak', refs: { matthew: '9:27-34' } },
   { id: 'harvest', title: 'The harvest is plentiful', refs: { matthew: '9:35-38' } },
   { id: 'sending-twelve', title: 'Sending out the Twelve', refs: { matthew: '10:5-15', mark: '6:7-13', luke: '9:1-6' } },
@@ -204,9 +204,9 @@ export const sections: Section[] = [
   { id: 'bread-of-life', title: 'The bread of life', refs: { john: '6:22-59' } },
   {
     id: 'words-eternal-life',
-    title: 'Many turn back; "You have the words of eternal life"',
+    title: 'Many turn back; “You have the words of eternal life”',
     refs: { john: '6:60-71' },
-    note: "Peter's confession in John's Gospel. Compare the confession at Caesarea Philippi (Matthew 16:13-20; Mark 8:27-30; Luke 9:18-21).",
+    note: "Peter’s confession in John’s Gospel. Compare the confession at Caesarea Philippi (Matthew 16:13-20; Mark 8:27-30; Luke 9:18-21).",
   },
   { id: 'tradition-elders', title: 'The tradition of the elders; what defiles', refs: { matthew: '15:1-20', mark: '7:1-23' } },
   { id: 'canaanite-woman', title: 'The Canaanite (Syrophoenician) woman', refs: { matthew: '15:21-28', mark: '7:24-30' } },
@@ -217,7 +217,7 @@ export const sections: Section[] = [
   { id: 'bethsaida-blind', title: 'A blind man at Bethsaida', refs: { mark: '8:22-26' } },
 
   // Toward Jerusalem
-  { id: 'peters-confession', title: "Peter's confession", refs: { matthew: '16:13-20', mark: '8:27-30', luke: '9:18-21' } },
+  { id: 'peters-confession', title: "Peter’s confession", refs: { matthew: '16:13-20', mark: '8:27-30', luke: '9:18-21' } },
   {
     id: 'first-prediction',
     title: 'First passion prediction; take up your cross',
@@ -345,14 +345,14 @@ export const sections: Section[] = [
     refs: { matthew: '21:18-22', mark: '11:12-14; 11:20-26' },
     note: 'Mark wraps the fig tree around the cleansing of the temple; Matthew tells it in one piece, the morning after.',
   },
-  { id: 'authority-questioned', title: "Jesus' authority questioned", refs: { matthew: '21:23-27', mark: '11:27-33', luke: '20:1-8' } },
+  { id: 'authority-questioned', title: "Jesus’ authority questioned", refs: { matthew: '21:23-27', mark: '11:27-33', luke: '20:1-8' } },
   { id: 'two-sons', title: 'The two sons', refs: { matthew: '21:28-32' } },
   { id: 'wicked-tenants', title: 'The wicked tenants', refs: { matthew: '21:33-46', mark: '12:1-12', luke: '20:9-19' } },
   { id: 'caesar', title: 'Paying taxes to Caesar', refs: { matthew: '22:15-22', mark: '12:13-17', luke: '20:20-26' } },
   { id: 'resurrection-question', title: 'The Sadducees and the resurrection', refs: { matthew: '22:23-33', mark: '12:18-27', luke: '20:27-40' } },
   { id: 'davids-son', title: "Whose son is the Christ?", refs: { matthew: '22:41-46', mark: '12:35-37', luke: '20:41-44' } },
   { id: 'woes-scribes', title: 'Woe to the scribes and Pharisees', refs: { matthew: '23:1-36', mark: '12:38-40', luke: '20:45-47' } },
-  { id: 'widows-offering', title: "The widow's offering", refs: { mark: '12:41-44', luke: '21:1-4' } },
+  { id: 'widows-offering', title: "The widow’s offering", refs: { mark: '12:41-44', luke: '21:1-4' } },
   {
     id: 'signs-of-end',
     title: 'The destruction of the temple; signs of the end',
@@ -370,7 +370,7 @@ export const sections: Section[] = [
     id: 'footwashing',
     title: 'Jesus washes the disciples\' feet',
     refs: { john: '13:1-20' },
-    note: 'In Matthew, Mark and Luke the last supper is a Passover meal (Mark 14:12). John sets it "before the feast of the Passover" (John 13:1), with the crucifixion on the day of Preparation (John 19:14).',
+    note: 'In Matthew, Mark and Luke the last supper is a Passover meal (Mark 14:12). John sets it “before the feast of the Passover” (John 13:1), with the crucifixion on the day of Preparation (John 19:14).',
   },
   {
     id: 'betrayer-foretold',
@@ -380,7 +380,7 @@ export const sections: Section[] = [
   },
   {
     id: 'lords-supper',
-    title: "The Lord's Supper",
+    title: "The Lord’s Supper",
     refs: { matthew: '26:26-29', mark: '14:22-25', luke: '22:14-20' },
     note: 'John has no account of the bread and the cup at the supper; in their place he gives the foot washing (John 13:1-20).',
   },
@@ -388,15 +388,15 @@ export const sections: Section[] = [
   { id: 'new-commandment', title: 'A new commandment', refs: { john: '13:31-35' } },
   {
     id: 'denial-foretold',
-    title: "Peter's denial foretold",
+    title: "Peter’s denial foretold",
     refs: { matthew: '26:30-35', mark: '14:26-31', luke: '22:31-34', john: '13:36-38' },
   },
   { id: 'two-swords', title: 'Purse, bag and sword', refs: { luke: '22:35-38' } },
   { id: 'way-truth-life', title: 'The way, the truth and the life; the promised Helper', refs: { john: '14:1-31' } },
   { id: 'true-vine', title: 'The true vine', refs: { john: '15:1-17' } },
-  { id: 'worlds-hatred', title: "The world's hatred", refs: { john: '15:18-16:4' } },
+  { id: 'worlds-hatred', title: "The world’s hatred", refs: { john: '15:18-16:4' } },
   { id: 'spirit-joy', title: 'The work of the Spirit; sorrow turned to joy', refs: { john: '16:5-33' } },
-  { id: 'jesus-prays', title: "Jesus' prayer for his disciples", refs: { john: '17:1-26' } },
+  { id: 'jesus-prays', title: "Jesus’ prayer for his disciples", refs: { john: '17:1-26' } },
 
   // The passion
   { id: 'gethsemane', title: 'Gethsemane', refs: { matthew: '26:36-46', mark: '14:32-42', luke: '22:39-46' } },
@@ -409,7 +409,7 @@ export const sections: Section[] = [
   },
   {
     id: 'peters-denials',
-    title: "Peter's denials",
+    title: "Peter’s denials",
     refs: { matthew: '26:69-75', mark: '14:66-72', luke: '22:55-62', john: '18:15-18; 18:25-27' },
   },
   { id: 'judas-death', title: 'The death of Judas', refs: { matthew: '27:3-10' }, note: 'Compare Acts 1:18-19.' },
@@ -423,7 +423,7 @@ export const sections: Section[] = [
     id: 'sentenced',
     title: 'Barabbas released; Jesus sentenced',
     refs: { matthew: '27:15-26', mark: '15:6-15', luke: '23:13-25', john: '18:39-19:15' },
-    note: 'John notes the hour: "the Preparation Day of the Passover, at about the sixth hour" (John 19:14). Mark says Jesus was crucified at the third hour (Mark 15:25).',
+    note: 'John notes the hour: “the Preparation Day of the Passover, at about the sixth hour” (John 19:14). Mark says Jesus was crucified at the third hour (Mark 15:25).',
   },
   { id: 'soldiers-mock', title: 'The soldiers mock Jesus', refs: { matthew: '27:27-31', mark: '15:16-20' } },
   { id: 'crucifixion', title: 'The crucifixion', refs: { matthew: '27:32-44', mark: '15:21-32', luke: '23:26-43', john: '19:16-27' } },
@@ -443,7 +443,7 @@ export const sections: Section[] = [
     refs: { mark: '16:9-11', john: '20:11-18' },
     note: LONGER_ENDING,
   },
-  { id: 'guards-report', title: "The guards' report", refs: { matthew: '28:11-15' } },
+  { id: 'guards-report', title: "The guards’ report", refs: { matthew: '28:11-15' } },
   { id: 'emmaus', title: 'The road to Emmaus', refs: { mark: '16:12-13', luke: '24:13-35' }, note: LONGER_ENDING },
   {
     id: 'appears-disciples',

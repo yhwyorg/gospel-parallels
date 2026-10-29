@@ -66,7 +66,7 @@ export default function Reader({ corpus, id, target }: { corpus: Corpus; id: str
       <div className="toolbar reader-tools">
         <label className="check">
           <input type="checkbox" checked={highlight} onChange={(e) => setHighlight(e.target.checked)} disabled={present.length < 2} />
-          Mark shared wording
+          Shade shared words
         </label>
         <label className="check">
           <input type="checkbox" checked={numbers} onChange={(e) => setNumbers(e.target.checked)} />
@@ -76,9 +76,13 @@ export default function Reader({ corpus, id, target }: { corpus: Corpus; id: str
         <button type="button" onClick={() => print()}>Print</button>
       </div>
       {highlight && present.length > 1 && (
-        <p className="hint">
-          Shaded words appear in more than one account; darker means more accounts. This compares English words, not
-          the Greek, so treat it as a pointer for the eye.
+        <p className="hint key">
+          Words found in more than one account are shaded:{' '}
+          <span className="key-item"><mark className="hl2">in 2</mark></span>
+          <span className="key-item"><mark className="hl3">in 3</mark></span>
+          <span className="key-item"><mark className="hl4">in all 4</mark></span>
+          This compares English words in one translation, not the Greek, so it is a pointer for the eye rather than an
+          analysis.
         </p>
       )}
 

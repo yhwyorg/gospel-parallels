@@ -15,13 +15,15 @@
   --john: #24548a;
 
   /* Shared-wording shading: two, three, four accounts. */
-  --hl2: rgba(214, 160, 30, 0.2);
-  --hl3: rgba(214, 160, 30, 0.38);
-  --hl4: rgba(214, 160, 30, 0.58);
+  --hl2: rgba(214, 160, 30, 0.16);
+  --hl3: rgba(214, 160, 30, 0.36);
+  --hl4: rgba(214, 160, 30, 0.62);
   --target: rgba(43, 93, 138, 0.12);
 
   --link-line: rgba(35, 32, 28, 0.18);
-  --link-notable: #b4541f;
+  /* Purple and ink are kept clear of the four Gospel colors, so a line's color never reads as "a Gospel". */
+  --link-notable: #7b3fa0;
+  --link-focus: #23201c;
 
   --serif: 'Iowan Old Style', 'Palatino Linotype', Palatino, 'Book Antiqua', Charter, Georgia, serif;
   --sans: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
@@ -43,12 +45,13 @@
     --mark: #e0b25c;
     --luke: #7dc493;
     --john: #8db8ec;
-    --hl2: rgba(224, 178, 92, 0.2);
-    --hl3: rgba(224, 178, 92, 0.34);
-    --hl4: rgba(224, 178, 92, 0.5);
+    --hl2: rgba(224, 178, 92, 0.14);
+    --hl3: rgba(224, 178, 92, 0.32);
+    --hl4: rgba(224, 178, 92, 0.58);
     --target: rgba(141, 184, 236, 0.16);
     --link-line: rgba(236, 230, 218, 0.2);
-    --link-notable: #f0955a;
+    --link-notable: #c9a0e8;
+    --link-focus: #ece6da;
     color-scheme: dark;
   }
 }
@@ -195,7 +198,29 @@ mark.hl4 { background: var(--hl4); }
 .links { width: 100%; display: block; overflow: visible; }
 .link { fill: none; stroke: var(--link-line); stroke-width: 1.2; }
 .link.notable { stroke: var(--link-notable); stroke-width: 2; }
-.link.focus { stroke: var(--focus); stroke-width: 3; }
+.link.focus { stroke: var(--link-focus); stroke-width: 3; }
+
+.lane-heads {
+  display: grid; grid-template-columns: minmax(0, 1fr) clamp(48px, 14vw, 200px) minmax(0, 1fr);
+  margin-top: 24px; font-family: var(--serif); font-weight: 600; font-size: 1.2rem;
+}
+.lane-heads span:first-child { text-align: right; padding: 0 8px; color: var(--c); }
+.lane-heads span:last-child { padding: 0 8px; color: var(--c); }
+.lane-heads + .lanes { margin-top: 6px; }
+
+.legend { display: flex; flex-wrap: wrap; gap: 8px 22px; margin: 16px 0 0; padding: 12px 14px; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); font-size: 0.9rem; }
+.legend div { display: flex; align-items: center; gap: 8px; }
+.legend dt, .legend dd { margin: 0; }
+.legend .link { stroke-width: 2; }
+.legend .link.notable { stroke-width: 2.5; }
+.legend-title { font-family: var(--serif); padding: 0 6px; }
+.legend-title.both { box-shadow: inset 3px 0 0 var(--muted); }
+.legend-title.only { color: var(--muted); }
+
+.key-item { margin-right: 6px; }
+.purple { color: var(--link-notable); }
+.gospel-key { display: flex; flex-wrap: wrap; gap: 4px 16px; font-size: 0.9rem; margin: 0 0 8px; }
+.swatch { display: inline-block; width: 0.8em; height: 0.8em; border-radius: 2px; background: var(--c); margin-right: 5px; vertical-align: -0.05em; }
 
 /* About */
 .about { max-width: 46rem; font-size: 1.05rem; }

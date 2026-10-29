@@ -56,6 +56,14 @@ export default function Home({ corpus }: { corpus: Corpus }) {
         </label>
       </div>
 
+      <p className="gospel-key">
+        {GOSPELS.map((g) => (
+          <span key={g} className={`col-${g}`}>
+            <span className="swatch" aria-hidden="true" />
+            <strong className={`ref-${g}`}>{GOSPEL_ABBR[g]}</strong> {GOSPEL_NAMES[g]}
+          </span>
+        ))}
+      </p>
       <p className="count" aria-live="polite">
         {rows.length} of {corpus.sections.length} sections
       </p>

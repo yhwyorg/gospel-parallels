@@ -38,7 +38,7 @@ export default function About() {
         <ul>
           <li>
             <strong>Read a section.</strong> Pick any section from the <a href={href.home()}>list</a> to see every
-            Gospel's account of it side by side. Under each column are the sections that come just before and after in
+            Gospel’s account of it side by side. Under each column are the sections that come just before and after in
             that Gospel, so you can read the story in its own setting.
           </li>
           <li>
@@ -52,8 +52,34 @@ export default function About() {
             point from another.
           </li>
           <li>
-            <strong>Mark shared wording</strong> shades the words that appear in more than one account. It compares
+            <strong>Shade shared words</strong> shades the words that appear in more than one account. It compares
             English words in one translation, not the Greek, so it is a pointer for the eye rather than an analysis.
+          </li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Colors and marks</h2>
+        <ul className="color-key">
+          <li>
+            Each Gospel keeps its own color everywhere on the site:{' '}
+            <span className="col-matthew"><span className="swatch" />Matthew</span>,{' '}
+            <span className="col-mark"><span className="swatch" />Mark</span>,{' '}
+            <span className="col-luke"><span className="swatch" />Luke</span> and{' '}
+            <span className="col-john"><span className="swatch" />John</span>. It marks the top of each column, the
+            Gospel’s name, and its references in the list of sections.
+          </li>
+          <li>
+            <span className="verse target">Blue-gray shading</span> marks the verses you looked up.
+          </li>
+          <li>
+            With <strong>Shade shared words</strong> turned on, gold shading marks words found in more than one account:{' '}
+            <mark className="hl2">in two</mark>, <mark className="hl3">in three</mark>, <mark className="hl4">in all four</mark>.
+          </li>
+          <li>
+            On the Order page, a gray line joins a section to the same section in the other Gospel; a{' '}
+            <strong className="purple">purple</strong> line marks a section told at a different point; a dark line is
+            the one you are pointing at. A title in gray, with no line, is found only in that Gospel.
           </li>
         </ul>
       </section>

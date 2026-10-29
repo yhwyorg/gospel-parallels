@@ -39,8 +39,9 @@ export default function Order({ corpus, a: qa, b: qb }: { corpus: Corpus; a?: st
     <article className="order">
       <h1>Where each Gospel places the story</h1>
       <p>
-        Each column lists one Gospel's sections in the order that Gospel tells them. A line joins the same section in
-        both. Where lines cross, the two Gospels tell those events in a different order.
+        Each column lists one Gospel’s sections from beginning to end, in the order that Gospel tells them. A line
+        joins a section to the same section in the other Gospel. Where lines cross, the two Gospels tell those events
+        in a different order.
       </p>
 
       <div className="toolbar">
@@ -64,7 +65,9 @@ export default function Order({ corpus, a: qa, b: qb }: { corpus: Corpus; a?: st
           both.{' '}
           {notable.length === 0
             ? 'The two Gospels tell every shared section in the same order.'
-            : `Setting aside the ${notable.length === 1 ? 'section' : `${notable.length} sections`} below (drawn in color) would bring the two orders into line:`}
+            : notable.length === 1
+              ? 'One section accounts for the difference in order. Set it aside, and the two Gospels tell everything else they share in the same sequence:'
+              : `These ${notable.length} sections account for the differences in order. Set them aside, and the two Gospels tell everything else they share in the same sequence:`}
         </p>
         {notable.length > 0 && (
           <ul className="notable">
@@ -78,8 +81,29 @@ export default function Order({ corpus, a: qa, b: qb }: { corpus: Corpus; a?: st
             ))}
           </ul>
         )}
+        {notable.length > 0 && (
+          <p className="muted">
+            When two explanations are equally simple (did one Gospel move a story earlier, or the other move its
+            neighbor later?) only one is listed, so read the list as “where the order differs”, not “what the writer
+            moved”.
+          </p>
+        )}
       </section>
 
+      <dl className="legend" aria-label="Key">
+        <div><dt><svg width="36" height="12" aria-hidden="true"><line x1="0" y1="6" x2="36" y2="6" className="link" /></svg></dt><dd>Same section in both Gospels</dd></div>
+        <div><dt><svg width="36" height="12" aria-hidden="true"><line x1="0" y1="6" x2="36" y2="6" className="link notable" /></svg></dt><dd>A section listed above, told at a different point</dd></div>
+        <div><dt><svg width="36" height="12" aria-hidden="true"><line x1="0" y1="6" x2="36" y2="6" className="link focus" /></svg></dt><dd>The section you are pointing at</dd></div>
+        <div><dt><span className="legend-title both">Title</span></dt><dd>Also in the other Gospel (the bar is in its own column’s color)</dd></div>
+        <div><dt><span className="legend-title only">Title</span></dt><dd>Only in this Gospel, so no line</dd></div>
+      </dl>
+
+      {/* Headings sit outside the lanes: a heading row inside them would shift every row off its line. */}
+      <div className="lane-heads" aria-hidden="true">
+        <span className={`col-${a}`}>{GOSPEL_NAMES[a]}</span>
+        <span />
+        <span className={`col-${b}`}>{GOSPEL_NAMES[b]}</span>
+      </div>
       <div className="lanes" style={{ height }} onMouseLeave={() => setFocus(null)}>
         <Lane list={left} g={a} other={b} side="left" focus={focus} setFocus={setFocus} />
         <svg className="links" viewBox={`0 0 100 ${height}`} preserveAspectRatio="none" height={height} aria-hidden="true">

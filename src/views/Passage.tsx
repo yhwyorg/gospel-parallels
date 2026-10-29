@@ -32,7 +32,8 @@ export default function Passage({ corpus, query }: { corpus: Corpus; query: stri
     return (
       <>
         <p className="found">
-          <strong>{formatPassage(passage)}</strong> is in this section. The verses you asked for are marked.
+          <strong>{formatPassage(passage)}</strong> is in this section. The verses you asked for are{' '}
+          <span className="verse target">shaded like this</span>.
         </p>
         <Reader corpus={corpus} id={found[0].id} target={passage} />
       </>

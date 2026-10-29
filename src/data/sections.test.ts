@@ -74,6 +74,17 @@ describe('sections', () => {
   });
 });
 
+describe('notes', () => {
+  it('quote the World English Bible exactly', () => {
+    // Notes quote Scripture in curly quotes; a misquote would sit beside the real text.
+    const fold = (s: string) => s.replace(/[“”‘’]/g, '').toLowerCase();
+    const all = fold(Object.values(text as GospelText).flat(2).join(' '));
+    const quotes = sections.flatMap((s) => [...(s.note ?? '').matchAll(/“([^”]+)”/g)].map((m) => [s.id, m[1]]));
+    expect(quotes.length).toBeGreaterThan(3);
+    expect(quotes.filter(([, q]) => !all.includes(fold(q)))).toEqual([]);
+  });
+});
+
 describe('sectionsFor', () => {
   it('finds the parallels for a single verse', () => {
     const found = sectionsFor(corpus, { gospel: 'mark', ranges: [{ start: key(4, 39), end: key(4, 39) }] });
