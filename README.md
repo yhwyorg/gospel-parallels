@@ -1,6 +1,6 @@
 # Gospel Parallels — yhwy.org
 
-To the glory of God, and for Darrell W. Johnson.
+Made for Darrell W. Johnson.
 
 Read Matthew, Mark, Luke and John side by side. Pick a section or type any
 passage (`Luke 15:11-32`, `Jn 3:16`) to see every account of it in parallel

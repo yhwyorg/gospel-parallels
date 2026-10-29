@@ -26,7 +26,7 @@ export default function App() {
         <div className="wrap header-row">
           <a className="brand" href={href.home()}>
             <span className="brand-title">Gospel Parallels</span>
-            <span className="brand-sub">To the glory of God · for Darrell W. Johnson</span>
+            <span className="brand-sub">The four Gospels, side by side</span>
           </a>
           <nav className="nav">
             <a href={href.home()} aria-current={route.view === 'home' ? 'page' : undefined}>Sections</a>
