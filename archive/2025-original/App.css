@@ -1,0 +1,115 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+.card {
+  padding: 2em;
+}
+
+.read-the-docs {
+  color: #888;
+}
+
+/* Custom styles for timeline cards */
+.timeline-card {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08) !important;
+  border-radius: 8px !important;
+  transition: all 0.3s ease !important;
+  border-left: 4px solid transparent !important;
+}
+
+.timeline-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+  transform: translateY(-2px) !important;
+}
+
+.timeline-card-title {
+  font-weight: 600 !important;
+  margin-bottom: 6px !important;
+  color: #212121 !important;
+}
+
+.timeline-card-subtitle {
+  font-style: italic !important;
+  color: #616161 !important;
+  margin-bottom: 8px !important;
+}
+
+.timeline-card-text {
+  color: #424242 !important;
+  white-space: pre-line !important;
+  line-height: 1.4 !important;
+}
+
+/* Styling for synoptic timeline cards */
+.chrono-card:nth-child(odd) .timeline-card {
+  border-left-color: #3f51b5 !important;
+}
+
+/* Styling for John's timeline cards */
+.chrono-card:nth-child(even) .timeline-card {
+  border-left-color: #9c27b0 !important;
+}
+
+/* Better tab styling */
+.MuiTabs-root {
+  background-color: #f5f5f5;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.MuiTab-root {
+  letter-spacing: 0.5px;
+  transition: all 0.2s ease;
+}
+
+/* Make the scrollbars more visible */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c5c5c5;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #a0a0a0;
+}
