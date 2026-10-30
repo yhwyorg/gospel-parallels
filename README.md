@@ -1,4 +1,4 @@
-# Gospel Parallels — gospel.yhwh.rest
+# Gospel Parallels — gospels.yhwh.rest
 
 Soli Deo gloria. Made for Darrell W. Johnson.
 
@@ -48,10 +48,10 @@ GitHub Pages, deployed by `.github/workflows/deploy.yml` on every push to
 `main` (tests must pass first). The custom domain is set in the repo's Pages
 settings; `public/CNAME` records it but Actions-based deploys ignore the file.
 
-DNS for yhwh.rest is on Cloudflare: `gospel` is a `CNAME` to
+DNS for yhwh.rest is on Cloudflare: `gospels` is a `CNAME` to
 `yhwyorg.github.io`, and must stay **DNS only** (grey cloud). With the proxy on,
-GitHub cannot issue or renew its HTTPS certificate. yhwh.rest is verified for
-the yhwyorg org (`_github-pages-challenge-yhwyorg` TXT record), which is what
+GitHub cannot issue or renew its HTTPS certificate. Verify yhwh.rest for
+the yhwyorg org (`_github-pages-challenge-yhwyorg` TXT record); that is what
 got certificate issuance unstuck on the previous domain.
 
 ## History
