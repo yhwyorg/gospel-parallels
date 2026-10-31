@@ -1,4 +1,4 @@
-import { useEffect, useState, type FormEvent } from 'react';
+import { useEffect, useRef, useState, type FormEvent } from 'react';
 import { href, useRoute } from './lib/route';
 import { isolateRefs } from './lib/refs';
 import { I18nProvider, loadLocale, useI18n, type I18n } from './i18n/context';
@@ -61,10 +61,47 @@ function Site({ locale, choose }: { locale: Locale; choose: (l: Locale) => void 
   const route = useRoute();
   const { t, info, licence } = useI18n();
   const tr = info.translation;
+  const header = useRef<HTMLElement>(null);
+
+  // The header is sticky; its height (which changes as it wraps on narrow screens)
+  // is published as --header-h so jumps to a spot on the page land below it.
+  //
+  // On a phone the header wraps to ~180px, a fifth of the screen, so there it tucks
+  // away while scrolling down to read and comes back on any scroll up; --header-h is
+  // 0 while it is tucked, so the sticky Gospel links move up into its place.
+  useEffect(() => {
+    const el = header.current!;
+    const narrow = matchMedia('(max-width: 720px)');
+    let lastY = scrollY;
+    let tucked = false;
+    const set = () => {
+      const h = tucked ? 0 : Math.ceil(el.getBoundingClientRect().height);
+      document.documentElement.style.setProperty('--header-h', `${h}px`);
+    };
+    const onScroll = () => {
+      const y = scrollY;
+      const tuck = narrow.matches && y > lastY && y > el.offsetHeight;
+      const show = !narrow.matches || y < lastY - 4 || y <= el.offsetHeight;
+      if (tuck !== tucked && (tuck || show)) {
+        tucked = tuck;
+        el.classList.toggle('tucked', tucked);
+        set();
+      }
+      lastY = y;
+    };
+    const ro = new ResizeObserver(set);
+    ro.observe(el);
+    set();
+    addEventListener('scroll', onScroll, { passive: true });
+    return () => {
+      ro.disconnect();
+      removeEventListener('scroll', onScroll);
+    };
+  }, []);
 
   return (
     <>
-      <header className="site-header">
+      <header className="site-header" ref={header}>
         <div className="wrap header-row">
           <a className="brand" href={href.home()}>
             <span className="brand-title">{t.siteName}</span>
