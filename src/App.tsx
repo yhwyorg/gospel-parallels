@@ -9,6 +9,7 @@ import Passage from './views/Passage';
 import Order from './views/Order';
 import About from './views/About';
 import Book from './views/Book';
+import Timeline from './views/Timeline';
 
 type Load = { state: 'loading' } | { state: 'ready'; i18n: I18n } | { state: 'failed'; message: string };
 
@@ -71,6 +72,7 @@ function Site({ locale, choose }: { locale: Locale; choose: (l: Locale) => void 
           </a>
           <nav className="nav">
             <a href={href.home()} aria-current={route.view === 'home' ? 'page' : undefined}>{t.nav.sections}</a>
+            <a href={href.timeline()} aria-current={route.view === 'timeline' ? 'page' : undefined}>{t.nav.timeline}</a>
             <a href={href.order('mark', 'john')} aria-current={route.view === 'order' ? 'page' : undefined}>{t.nav.order}</a>
             <a href={href.book()} aria-current={route.view === 'book' ? 'page' : undefined}>{t.nav.book}</a>
             <a href={href.about()} aria-current={route.view === 'about' ? 'page' : undefined}>{t.nav.about}</a>
@@ -93,6 +95,8 @@ function Site({ locale, choose }: { locale: Locale; choose: (l: Locale) => void 
           <About />
         ) : route.view === 'book' ? (
           <Book />
+        ) : route.view === 'timeline' ? (
+          <Timeline />
         ) : route.view === 'section' ? (
           <Reader id={route.id} />
         ) : route.view === 'passage' ? (

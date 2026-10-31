@@ -18,7 +18,7 @@ const LONGER_ENDING = `Die beiden ältesten vollständigen griechischen Handschr
 const de: Dict = {
   siteName: 'Synopse der Evangelien',
   tagline: 'Die vier Evangelien nebeneinander',
-  nav: { sections: 'Abschnitte', order: 'Reihenfolge', book: 'Buch', about: 'Über' },
+  nav: { sections: 'Abschnitte', timeline: 'Zeitleiste', order: 'Reihenfolge', book: 'Buch', about: 'Über' },
   language: 'Sprache',
   lookup: { label: 'Bibelstelle suchen', placeholder: `Bibelstelle suchen, z. B. ${N.luke} 15:11-32`, go: 'Los' },
   loading: 'Die Evangelien werden geladen …',
@@ -126,6 +126,37 @@ const de: Dict = {
 
   // Two separate paragraphs on purpose: the sentence about praising God and the
   // sentence about Darrell must never be joined into one phrase.
+  timeline: {
+    title: 'Die Geschichte der Reihe nach',
+    intro: 'Alle Abschnitte in der Reihenfolge der Harmonie, von links nach rechts, mit einer Zeile für jedes Evangelium. Ein Block in einer Zeile bedeutet, dass dieses Evangelium das Ereignis erzählt; eine leere Strecke, dass es das nicht tut. Wählen Sie einen Block, um alle Berichte nebeneinander zu lesen.',
+    periods: {
+      beginnings: 'Die Anfänge',
+      preparation: 'Johannes der Täufer und die Taufe',
+      early: 'Das frühe Wirken',
+      galilee: 'Das Wirken in Galiläa',
+      journey: 'Auf dem Weg nach Jerusalem',
+      week: 'Die letzte Woche',
+      passion: 'Die Passion',
+      resurrection: 'Die Auferstehung',
+    },
+    days: {
+      sunday: 'Sonntag · Palmsonntag',
+      monday: 'Montag',
+      tuesday: 'Dienstag',
+      wednesday: 'Mittwoch',
+      thursday: 'Donnerstag · das Abendmahl',
+      thursdayNight: 'Donnerstagnacht',
+      friday: 'Freitag · Karfreitag',
+      saturday: 'Samstag',
+      easter: 'Ostersonntag',
+      later: 'Nach Ostern',
+    },
+    dayNote: 'Die Tage der letzten Woche folgen der überlieferten Lesart der Zeitangaben in den Evangelien selbst, vor allem bei Markus; Abschnitte ohne Angabe bleiben ohne Tag. Johannes setzt das letzte Mahl „vor dem Passafest“ an (Johannes 13:1).',
+    jump: 'Gehe zu',
+    elsewhereKey: 'In diesem Evangelium an anderer Stelle erzählt',
+    elsewhere: (g, after) => (after ? `${g} erzählt dies an anderer Stelle, nach „${after}“.` : `${g} erzählt dies an anderer Stelle, am Anfang.`),
+  },
+
   Dedication: () => (
     <>
       <p className="soli">Soli Deo gloria</p>

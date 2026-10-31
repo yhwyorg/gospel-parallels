@@ -277,7 +277,7 @@ const notes: Record<string, string> = {
 const ar: Dict = {
   siteName: 'الأناجيل المتوازية',
   tagline: 'الأناجيل الأربعة جنبًا إلى جنب',
-  nav: { sections: 'الأقسام', order: 'الترتيب', book: 'الكتاب', about: 'عن الموقع' },
+  nav: { sections: 'الأقسام', timeline: 'الخط الزمني', order: 'الترتيب', book: 'الكتاب', about: 'عن الموقع' },
   language: 'اللغة',
   lookup: { label: 'ابحث عن مقطع', placeholder: `ابحث عن مقطع، مثل ${n.luke} 15:11-32`, go: 'اذهب' },
   loading: 'جارٍ تحميل الأناجيل…',
@@ -389,6 +389,37 @@ const ar: Dict = {
   // Latin names are wrapped in <bdi> (and the book titles given dir="ltr") so that
   // their own punctuation, like the "?" of "Who Is Jesus?", stays with them inside
   // right-to-left text instead of jumping to the other end of the name.
+  timeline: {
+    title: 'القصة بالترتيب',
+    intro: 'جميع الأقسام بترتيب التوافق، من اليمين إلى اليسار، مع صفٍّ لكل إنجيل. وجود كتلة في صفٍّ يعني أن ذلك الإنجيل يروي الحدث، والمساحة الفارغة تعني أنه لا يرويه. اختر كتلة لتقرأ كل الروايات جنبًا إلى جنب.',
+    periods: {
+      beginnings: 'البدايات',
+      preparation: 'يوحنا المعمدان والمعمودية',
+      early: 'بداية الخدمة',
+      galilee: 'الخدمة في الجليل',
+      journey: 'نحو أورشليم',
+      week: 'الأسبوع الأخير',
+      passion: 'الآلام',
+      resurrection: 'القيامة',
+    },
+    days: {
+      sunday: 'الأحد · أحد الشعانين',
+      monday: 'الاثنين',
+      tuesday: 'الثلاثاء',
+      wednesday: 'الأربعاء',
+      thursday: 'الخميس · العشاء الأخير',
+      thursdayNight: 'ليلة الخميس',
+      friday: 'الجمعة · الجمعة العظيمة',
+      saturday: 'السبت',
+      easter: 'أحد القيامة',
+      later: 'بعد القيامة',
+    },
+    dayNote: 'تتبع أيام الأسبوع الأخير القراءة التقليدية لإشارات الأناجيل نفسها، ولا سيما مرقس؛ والأقسام التي لا إشارة فيها تُركت بلا يوم. ويضع يوحنا العشاء الأخير «قبل عيد الفصح» (يوحنا 13:1).',
+    jump: 'انتقل إلى',
+    elsewhereKey: 'يُروى في موضع آخر في هذا الإنجيل',
+    elsewhere: (g, after) => (after ? `يروي ${g} هذا في موضع آخر، بعد «${after}».` : `يروي ${g} هذا في موضع آخر، في بدايته.`),
+  },
+
   Dedication: () => (
     <>
       <p className="soli">Soli Deo gloria</p>

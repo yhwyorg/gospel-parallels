@@ -19,7 +19,7 @@ const LONGER_ENDING = `Les deux plus anciens manuscrits grecs complets de ${N.ma
 const fr: Dict = {
   siteName: 'Synopse des Évangiles',
   tagline: 'Les quatre Évangiles, côte à côte',
-  nav: { sections: 'Sections', order: 'Ordre', book: 'Livre', about: 'À propos' },
+  nav: { sections: 'Sections', timeline: 'Chronologie', order: 'Ordre', book: 'Livre', about: 'À propos' },
   language: 'Langue',
   lookup: { label: 'Trouver un passage', placeholder: `Trouver un passage, p. ex. ${N.luke} 15:11-32`, go: 'Aller' },
   loading: 'Chargement des Évangiles…',
@@ -126,6 +126,37 @@ const fr: Dict = {
 
   // Two separate paragraphs on purpose: the sentence about blessing God and the
   // sentence about Darrell must never be joined into one phrase.
+  timeline: {
+    title: 'Le récit dans l’ordre',
+    intro: 'Toutes les sections dans l’ordre de l’harmonie, de gauche à droite, avec une ligne pour chaque Évangile. Un bloc sur une ligne indique que cet Évangile rapporte l’événement ; un espace vide, qu’il ne le rapporte pas. Choisissez un bloc pour lire tous les récits côte à côte.',
+    periods: {
+      beginnings: 'Les commencements',
+      preparation: 'Jean-Baptiste et le baptême',
+      early: 'Les débuts du ministère',
+      galilee: 'Le ministère en Galilée',
+      journey: 'Vers Jérusalem',
+      week: 'La dernière semaine',
+      passion: 'La Passion',
+      resurrection: 'La résurrection',
+    },
+    days: {
+      sunday: 'Dimanche · les Rameaux',
+      monday: 'Lundi',
+      tuesday: 'Mardi',
+      wednesday: 'Mercredi',
+      thursday: 'Jeudi · la Cène',
+      thursdayNight: 'Jeudi soir',
+      friday: 'Vendredi · Vendredi saint',
+      saturday: 'Samedi',
+      easter: 'Dimanche de Pâques',
+      later: 'Après Pâques',
+    },
+    dayNote: 'Les jours de la dernière semaine suivent la lecture traditionnelle des indications données par les Évangiles eux-mêmes, surtout par Marc ; les sections sans indication restent sans jour. Jean place le dernier repas « avant la fête de Pâque » (Jean 13:1).',
+    jump: 'Aller à',
+    elsewhereKey: 'Rapporté à un autre moment dans cet Évangile',
+    elsewhere: (g, after) => (after ? `${g} le rapporte à un autre moment, après « ${after} ».` : `${g} le rapporte à un autre moment, au début.`),
+  },
+
   Dedication: () => (
     <>
       <p className="soli">Soli Deo gloria</p>

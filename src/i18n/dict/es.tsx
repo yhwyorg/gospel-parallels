@@ -13,7 +13,7 @@ const secciones = (n: number) => `${n} ${n === 1 ? 'sección' : 'secciones'}`;
 const es: Dict = {
   siteName: 'Paralelos de los Evangelios',
   tagline: 'Los cuatro Evangelios, lado a lado',
-  nav: { sections: 'Secciones', order: 'Orden', book: 'Libro', about: 'Acerca de' },
+  nav: { sections: 'Secciones', timeline: 'Cronología', order: 'Orden', book: 'Libro', about: 'Acerca de' },
   language: 'Idioma',
   lookup: { label: 'Buscar un pasaje', placeholder: 'Busque un pasaje, p. ej. Lucas 15:11-32', go: 'Ir' },
   loading: 'Cargando los Evangelios…',
@@ -121,6 +121,37 @@ const es: Dict = {
   // Two separate paragraphs on purpose: the sentence about blessing God and the
   // sentence about Darrell must never share a phrase. He is alive, so no wording of
   // homage or memorial ("homenaje", "en honor de", "en memoria").
+  timeline: {
+    title: 'La historia en orden',
+    intro: 'Todas las secciones en orden de armonía, de izquierda a derecha, con una fila para cada Evangelio. Un bloque en una fila indica que ese Evangelio narra el suceso; un tramo vacío, que no lo narra. Elija un bloque para leer todos los relatos lado a lado.',
+    periods: {
+      beginnings: 'Los comienzos',
+      preparation: 'Juan el Bautista y el bautismo',
+      early: 'El ministerio inicial',
+      galilee: 'El ministerio en Galilea',
+      journey: 'Camino a Jerusalén',
+      week: 'La última semana',
+      passion: 'La pasión',
+      resurrection: 'La resurrección',
+    },
+    days: {
+      sunday: 'Domingo · Domingo de Ramos',
+      monday: 'Lunes',
+      tuesday: 'Martes',
+      wednesday: 'Miércoles',
+      thursday: 'Jueves · la Última Cena',
+      thursdayNight: 'Jueves por la noche',
+      friday: 'Viernes · Viernes Santo',
+      saturday: 'Sábado',
+      easter: 'Domingo de Resurrección',
+      later: 'Después de la Pascua',
+    },
+    dayNote: 'Los días de la última semana siguen la lectura tradicional de las indicaciones de los propios Evangelios, sobre todo las de Marcos; las secciones sin indicación quedan sin día. Juan sitúa la última cena «antes de la fiesta de la Pascua» (Juan 13:1).',
+    jump: 'Ir a',
+    elsewhereKey: 'Narrado en otro momento en este Evangelio',
+    elsewhere: (g, after) => (after ? `${g} lo narra en otro momento, después de «${after}».` : `${g} lo narra en otro momento, al principio.`),
+  },
+
   Dedication: () => (
     <>
       <p className="soli">Soli Deo gloria</p>

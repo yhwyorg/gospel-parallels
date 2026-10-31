@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import type { Day, PeriodKey } from '../data/timeline';
 import type { Gospel, RefProblem } from '../lib/refs';
 
 /**
@@ -14,7 +15,7 @@ export interface Dict {
   siteName: string;
   /** Under the site name, and the home page heading. */
   tagline: string;
-  nav: { sections: string; order: string; book: string; about: string };
+  nav: { sections: string; timeline: string; order: string; book: string; about: string };
   language: string;
   lookup: { label: string; placeholder: string; go: string };
   loading: string;
@@ -84,6 +85,22 @@ export interface Dict {
     tie: string;
     legend: { label: string; same: string; notable: string; focus: string; sample: string; both: string; only: string };
     lane: (g: string) => string;
+  };
+
+  timeline: {
+    title: string;
+    intro: string;
+    /** Names of the stretches of the story, in harmony order (see src/data/timeline.ts). */
+    periods: Record<PeriodKey, string>;
+    /** Days of the last week as the traditional reading marks them, plus "after Easter". */
+    days: Record<Day, string>;
+    /** Says the days follow the traditional reading of the Gospels' own markers, and that John sets the supper before the Passover. */
+    dayNote: string;
+    jump: string;
+    /** Legend for a dashed block. */
+    elsewhereKey: string;
+    /** Tooltip on a dashed block: `after` is the title of the section it follows in that Gospel, or null at its start. */
+    elsewhere: (g: string, after: string | null) => string;
   };
 
   /** The dedication, shared by the About page and the book. */

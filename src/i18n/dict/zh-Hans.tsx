@@ -9,7 +9,7 @@ const LONGER_ENDING =
 const zhHans: Dict = {
   siteName: '福音书对照',
   tagline: '四卷福音书，并排对照',
-  nav: { sections: '段落', order: '次序', book: '书本', about: '关于' },
+  nav: { sections: '段落', timeline: '时间线', order: '次序', book: '书本', about: '关于' },
   language: '语言',
   lookup: { label: '查找经文', placeholder: '查找经文，例如：路加福音 15:11-32', go: '查找' },
   loading: '正在载入福音书……',
@@ -113,6 +113,37 @@ const zhHans: Dict = {
   // God's glory and Darrell's name stay in separate paragraphs, as in English, and
   // nothing here is worded as a tribute or memorial: he is living, and the family
   // asked for both. The book titles stay in English because they are English books.
+  timeline: {
+    title: '按次序看全貌',
+    intro: '所有段落按合参次序从左到右排列，每卷福音书一行。某一行有方块，表示该福音书记载了这件事；空白表示没有记载。点选方块，即可并排阅读各卷的记载。',
+    periods: {
+      beginnings: '开端',
+      preparation: '施洗约翰与耶稣受洗',
+      early: '早期事工',
+      galilee: '加利利的事工',
+      journey: '往耶路撒冷去',
+      week: '最后一周',
+      passion: '受难',
+      resurrection: '复活',
+    },
+    days: {
+      sunday: '主日 · 棕枝主日',
+      monday: '星期一',
+      tuesday: '星期二',
+      wednesday: '星期三',
+      thursday: '星期四 · 最后的晚餐',
+      thursdayNight: '星期四夜间',
+      friday: '星期五 · 受难日',
+      saturday: '星期六',
+      easter: '复活节主日',
+      later: '复活之后',
+    },
+    dayNote: '最后一周的日子，是按传统方式解读福音书本身的时间提示（主要是马可福音）而定；没有提示的段落不标日子。约翰把最后的晚餐放在「逾越节以前」（约翰福音 13:1）。',
+    jump: '跳到',
+    elsewhereKey: '此福音书在别处记载',
+    elsewhere: (g, after) => (after ? `${g}在别处记载此事，在「${after}」之后。` : `${g}在别处记载此事，在书卷开头。`),
+  },
+
   Dedication: () => (
     <>
       <p className="soli">Soli Deo gloria</p>

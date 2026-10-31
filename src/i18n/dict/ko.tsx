@@ -9,7 +9,7 @@ const LONGER_ENDING =
 const ko: Dict = {
   siteName: '사복음서 대조',
   tagline: '네 복음서를 나란히',
-  nav: { sections: '단락', order: '순서', book: '책', about: '소개' },
+  nav: { sections: '단락', timeline: '연대표', order: '순서', book: '책', about: '소개' },
   language: '언어',
   lookup: { label: '본문 찾기', placeholder: '본문 찾기, 예: 누가복음 15:11-32', go: '찾기' },
   loading: '복음서를 불러오는 중…',
@@ -119,6 +119,37 @@ const ko: Dict = {
 
   // Kept to two separate statements, as in English: the site is offered to bless God, and
   // it was made for Darrell. Words such as 헌정, 기념, 추모 are avoided on purpose; he is alive.
+  timeline: {
+    title: '순서대로 보는 이야기',
+    intro: '모든 단락을 조화 순서대로 왼쪽에서 오른쪽으로 늘어놓고, 복음서마다 한 줄씩 보여 줍니다. 줄에 블록이 있으면 그 복음서가 그 사건을 기록한 것이고, 비어 있으면 기록하지 않은 것입니다. 블록을 누르면 모든 기록을 나란히 읽을 수 있습니다.',
+    periods: {
+      beginnings: '시작',
+      preparation: '세례 요한과 예수님의 세례',
+      early: '초기 사역',
+      galilee: '갈릴리 사역',
+      journey: '예루살렘을 향하여',
+      week: '마지막 주간',
+      passion: '수난',
+      resurrection: '부활',
+    },
+    days: {
+      sunday: '주일 · 종려주일',
+      monday: '월요일',
+      tuesday: '화요일',
+      wednesday: '수요일',
+      thursday: '목요일 · 최후의 만찬',
+      thursdayNight: '목요일 밤',
+      friday: '금요일 · 성금요일',
+      saturday: '토요일',
+      easter: '부활주일',
+      later: '부활 이후',
+    },
+    dayNote: '마지막 주간의 요일은 복음서 자체의 시간 표시(주로 마가복음)를 전통적으로 읽은 것을 따랐으며, 표시가 없는 단락에는 요일을 붙이지 않았습니다. 요한은 마지막 만찬을 “유월절 전에”(요한복음 13:1) 있었던 일로 기록합니다.',
+    jump: '바로 가기',
+    elsewhereKey: '이 복음서에서는 다른 자리에 기록됨',
+    elsewhere: (g, after) => (after ? `${g}은 이 일을 다른 자리, ‘${after}’ 다음에 기록합니다.` : `${g}은 이 일을 다른 자리, 맨 처음에 기록합니다.`),
+  },
+
   Dedication: () => (
     <>
       <p className="soli">Soli Deo gloria</p>

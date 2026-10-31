@@ -10,7 +10,7 @@ const notes = Object.fromEntries(sections.flatMap((s) => (s.note ? [[s.id, s.not
 const en: Dict = {
   siteName: 'Gospel Parallels',
   tagline: 'The four Gospels, side by side',
-  nav: { sections: 'Sections', order: 'Order', book: 'Book', about: 'About' },
+  nav: { sections: 'Sections', timeline: 'Timeline', order: 'Order', book: 'Book', about: 'About' },
   language: 'Language',
   lookup: { label: 'Find a passage', placeholder: 'Find a passage, e.g. Luke 15:11-32', go: 'Go' },
   loading: 'Loading the Gospels…',
@@ -95,6 +95,37 @@ const en: Dict = {
       only: 'Only in this Gospel, so no line',
     },
     lane: (g) => `${g} in order`,
+  },
+
+  timeline: {
+    title: 'The story in order',
+    intro: 'Every section in harmony order, left to right, with a row for each Gospel. A block in a row means that Gospel tells the event; an empty stretch means it does not. Choose a block to read every account side by side.',
+    periods: {
+      beginnings: 'Beginnings',
+      preparation: 'John the Baptist and the baptism',
+      early: 'Early ministry',
+      galilee: 'Ministry in Galilee',
+      journey: 'Toward Jerusalem',
+      week: 'The last week',
+      passion: 'The passion',
+      resurrection: 'The resurrection',
+    },
+    days: {
+      sunday: 'Sunday · Palm Sunday',
+      monday: 'Monday',
+      tuesday: 'Tuesday',
+      wednesday: 'Wednesday',
+      thursday: 'Thursday · the Last Supper',
+      thursdayNight: 'Thursday night',
+      friday: 'Friday · Good Friday',
+      saturday: 'Saturday',
+      easter: 'Easter Sunday',
+      later: 'After Easter',
+    },
+    dayNote: 'Days of the last week follow the traditional reading of the Gospels’ own markers, mostly Mark’s; sections without a marker are left without a day. John sets the last supper “before the feast of the Passover” (John 13:1).',
+    jump: 'Go to',
+    elsewhereKey: 'Told at a different point in this Gospel',
+    elsewhere: (g, after) => (after ? `${g} tells this at a different point, after “${after}”.` : `${g} tells this at a different point, at its beginning.`),
   },
 
   Dedication: () => (

@@ -8,7 +8,8 @@ export type Route =
   | { view: 'passage'; query: string }
   | { view: 'order'; a?: string; b?: string }
   | { view: 'about' }
-  | { view: 'book' };
+  | { view: 'book' }
+  | { view: 'timeline' };
 
 export function parse(hash: string): Route {
   const [path, qs] = hash.replace(/^#\/?/, '').split('?');
@@ -21,6 +22,7 @@ export function parse(hash: string): Route {
     case 'order': return { view: 'order', a: params.get('a') ?? undefined, b: params.get('b') ?? undefined };
     case 'about': return { view: 'about' };
     case 'book': return { view: 'book' };
+    case 'timeline': return { view: 'timeline' };
     default: return { view: 'home' };
   }
 }
@@ -32,6 +34,7 @@ export const href = {
   order: (a: string, b: string) => `#/order?a=${a}&b=${b}`,
   about: () => '#/about',
   book: () => '#/book',
+  timeline: () => '#/timeline',
 };
 
 export function useRoute(): Route {

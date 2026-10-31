@@ -269,6 +269,50 @@ mark.hl4 { background: var(--hl4); }
   .lookup { max-width: none; }
 }
 
+/* Timeline: one row per Gospel, a fixed-width column per section so an event's
+   blocks line up across the rows. The label column stays in view while it scrolls. */
+.timeline { --tl-label: 110px; --tl-col: 132px; }
+.timeline .lede { max-width: 50rem; color: var(--muted); }
+.tl-jump { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.tl-key { max-width: 60rem; }
+.tl-block.tl-sample { display: inline-block; width: 2.2em; height: 1em; vertical-align: -0.1em; padding: 0; min-height: 0; }
+.tl-scroll { overflow-x: auto; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); margin-top: 12px; }
+.tl-grid { display: grid; grid-auto-rows: auto; gap: 4px 4px; padding: 8px 8px 12px 0; width: max-content; }
+.tl-period, .tl-day {
+  font-family: var(--serif); font-weight: 600; padding: 4px 8px; border-inline-start: 2px solid var(--line);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  /* Jumping to a period must not land it under the sticky Gospel labels. */
+  scroll-margin-inline-start: var(--tl-label);
+}
+.tl-day { font-family: var(--sans); font-weight: 500; font-size: 0.82rem; color: var(--accent); }
+.tl-label {
+  position: sticky; inset-inline-start: 0; z-index: 1; background: var(--surface); grid-column: 1;
+  font-family: var(--serif); font-weight: 600; color: var(--c); padding: 8px; border-inline-end: 3px solid var(--c);
+  display: flex; align-items: center;
+}
+.tl-block {
+  display: flex; flex-direction: column; gap: 2px; min-height: 84px; padding: 6px 8px; border-radius: 6px;
+  text-decoration: none; color: var(--ink); background: var(--bg);
+  border: 1px solid var(--line); border-top: 3px solid var(--c); font-size: 0.82rem; line-height: 1.25;
+}
+.tl-block:hover, .tl-block:focus-visible { background: var(--target); }
+/* Dashed: this Gospel tells the event at a different point from the harmony. */
+.tl-block.elsewhere { border-style: dashed; border-top-style: dashed; background: transparent; }
+.tl-title { font-family: var(--serif); font-size: 0.9rem; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+.tl-ref { color: var(--c); font-weight: 600; margin-top: auto; }
+.tl-list { display: none; list-style: none; margin: 12px 0 0; padding: 0; }
+.tl-list-period { font-family: var(--serif); font-weight: 600; font-size: 1.2rem; margin: 18px 0 4px; scroll-margin-top: 12px; }
+.tl-list-day { color: var(--accent); font-weight: 600; font-size: 0.9rem; margin: 10px 0 2px; }
+.tl-list li:not(.tl-list-period):not(.tl-list-day) { border-bottom: 1px solid var(--line); }
+.tl-list a { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 12px; padding: 8px 2px; color: var(--ink); text-decoration: none; }
+.ref.elsewhere { text-decoration: underline dashed; text-underline-offset: 3px; }
+/* After the rules above, not in the shared narrow-screen block earlier in the file:
+   there, these lost to the defaults above and phones showed neither view. */
+@media (max-width: 720px) {
+  .tl-scroll { display: none; }
+  .tl-list { display: block; }
+}
+
 /* Book: on screen, a preview of the printed volume below the download panel. */
 .book-screen { max-width: 46rem; border-bottom: 1px solid var(--line); padding-bottom: 12px; margin-bottom: 24px; }
 .book-pages > section { margin-bottom: 2.5rem; }

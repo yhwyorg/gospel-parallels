@@ -6,7 +6,10 @@ Read Matthew, Mark, Luke and John side by side. Pick a section or type any
 passage (`Luke 15:11-32`, `Jn 3:16`) to see every account of it in parallel
 columns, with the sections before and after it in each Gospel. The Order page
 lines up two Gospels and shows where they tell events in a different order. The
-Book page has every section in one volume, to print or download as a PDF.
+Timeline sets every section in harmony order with a row per Gospel, marking the
+periods of the ministry and the days of the last week, and dashing any block a
+Gospel tells at a different point. The Book page has every section in one volume,
+to print or download as a PDF.
 
 The site is in eleven languages, each with a published translation of its own
 (below). It opens in the language the reader's browser asks for, and the menu in
@@ -39,6 +42,8 @@ install `fonts-noto-core fonts-noto-cjk`, as the deploy workflow does).
 | `src/lib/refs.ts` | Reference parsing (`8:31-9:1`, `Mk 4:35`). |
 | `src/lib/corpus.ts` | Indexes sections against the text; derives each Gospel's order from where its verses fall. |
 | `src/lib/sequence.ts` | Works out which sections two Gospels tell in a different order. |
+| `src/data/timeline.ts` | The timeline's periods, and the days of the last week where the Gospels mark them. |
+| `src/lib/timeline.ts` | Lays the harmony out as timeline columns and finds what each Gospel tells out of order. |
 | `src/views/` | The pages. |
 
 Each Gospel's order is never typed in by hand; it comes from the verse

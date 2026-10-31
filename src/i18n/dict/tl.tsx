@@ -9,7 +9,7 @@ const LONGER_ENDING =
 const tl: Dict = {
   siteName: 'Paghahambing ng mga Ebanghelyo',
   tagline: 'Ang apat na Ebanghelyo, magkakatabi',
-  nav: { sections: 'Mga Bahagi', order: 'Pagkakasunod', book: 'Aklat', about: 'Tungkol Dito' },
+  nav: { sections: 'Mga Bahagi', timeline: 'Takdang Panahon', order: 'Pagkakasunod', book: 'Aklat', about: 'Tungkol Dito' },
   language: 'Wika',
   lookup: { label: 'Maghanap ng talata', placeholder: 'Maghanap ng talata, hal. Lucas 15:11-32', go: 'Hanapin' },
   loading: 'Kinukuha ang mga Ebanghelyo…',
@@ -118,6 +118,37 @@ const tl: Dict = {
 
   // Kept to two separate statements, as in English: the site is offered to bless God, and
   // it was made for Darrell. "Parangal" and "alaala" are avoided on purpose; he is alive.
+  timeline: {
+    title: 'Ang Kuwento ayon sa Pagkakasunod',
+    intro: 'Lahat ng bahagi ayon sa pinag-isang pagkakasunod, mula kaliwa pakanan, na may isang hanay para sa bawat Ebanghelyo. Kapag may bloke sa isang hanay, isinasalaysay ng Ebanghelyong iyon ang pangyayari; kapag walang laman, hindi ito isinasalaysay. Pumili ng bloke upang mabasa nang magkakatabi ang lahat ng salaysay.',
+    periods: {
+      beginnings: 'Ang Pasimula',
+      preparation: 'Si Juan Bautista at ang Bautismo',
+      early: 'Ang Maagang Ministeryo',
+      galilee: 'Ang Ministeryo sa Galilea',
+      journey: 'Patungong Jerusalem',
+      week: 'Ang Huling Linggo',
+      passion: 'Ang Pagpapakasakit',
+      resurrection: 'Ang Muling Pagkabuhay',
+    },
+    days: {
+      sunday: 'Linggo · Linggo ng Palaspas',
+      monday: 'Lunes',
+      tuesday: 'Martes',
+      wednesday: 'Miyerkules',
+      thursday: 'Huwebes · ang Huling Hapunan',
+      thursdayNight: 'Huwebes ng gabi',
+      friday: 'Biyernes · Biyernes Santo',
+      saturday: 'Sabado',
+      easter: 'Linggo ng Pagkabuhay',
+      later: 'Pagkatapos ng Pagkabuhay',
+    },
+    dayNote: 'Ang mga araw ng huling linggo ay ayon sa nakaugaliang pagbasa sa mga palatandaan ng mga Ebanghelyo mismo, lalo na kay Marcos; walang araw ang mga bahaging walang palatandaan. Inilalagay ni Juan ang huling hapunan “bago ang Kapistahan ng Paskuwa” (Juan 13:1).',
+    jump: 'Pumunta sa',
+    elsewhereKey: 'Isinalaysay sa ibang bahagi ng Ebanghelyong ito',
+    elsewhere: (g, after) => (after ? `Isinalaysay ito ni ${g} sa ibang bahagi, pagkatapos ng “${after}”.` : `Isinalaysay ito ni ${g} sa ibang bahagi, sa simula.`),
+  },
+
   Dedication: () => (
     <>
       <p className="soli">Soli Deo gloria</p>
