@@ -107,7 +107,16 @@ h1 { font-size: clamp(1.6rem, 4vw, 2.2rem); margin: 1.5rem 0 0.75rem; }
 }
 
 /* Header */
-.site-header { background: var(--surface); border-bottom: 1px solid var(--line); }
+/* Stays at the top while the page scrolls, so the passage box and navigation are
+   always in reach. --header-h is its measured height (set in App.tsx); anything that
+   scrolls to a spot on the page leaves that much room, or the header would cover it. */
+.site-header {
+  position: sticky; top: 0; z-index: 20; background: var(--surface); border-bottom: 1px solid var(--line);
+  transition: transform 0.22s ease;
+}
+.site-header.tucked { transform: translateY(-100%); }
+@media (prefers-reduced-motion: reduce) { .site-header, .jump { transition: none; } }
+:root { --header-h: 0px; }
 .header-row { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 24px; padding-top: 12px; padding-bottom: 12px; }
 .brand { display: flex; flex-direction: column; text-decoration: none; color: var(--ink); margin-inline-end: auto; }
 .brand-title { font-family: var(--serif); font-size: 1.45rem; font-weight: 600; }
@@ -176,8 +185,9 @@ a.button.primary { background: var(--accent); border-color: var(--accent); color
 .columns.n1 { grid-template-columns: minmax(0, 46rem); }
 
 .column {
+  scroll-margin-top: calc(var(--header-h) + 12px);
   background: var(--surface); border: 1px solid var(--line); border-top: 4px solid var(--c);
-  border-radius: 8px; padding: 12px 16px 14px; scroll-margin-top: 12px;
+  border-radius: 8px; padding: 12px 16px 14px;
 }
 .col-matthew { --c: var(--matthew); }
 .col-mark { --c: var(--mark); }
@@ -264,7 +274,7 @@ mark.hl4 { background: var(--hl4); }
 }
 @media (max-width: 720px) {
   .columns, .columns.n4, .columns.n3, .columns.n2 { grid-template-columns: minmax(0, 1fr); }
-  .jump { display: flex; position: sticky; top: 0; background: var(--bg); padding: 8px 0; z-index: 1; }
+  .jump { display: flex; position: sticky; top: var(--header-h); background: var(--bg); padding: 8px 0; z-index: 1; transition: top 0.22s ease; }
   .lane li { font-size: 0.85rem; padding: 0 4px; }
   .lookup { max-width: none; }
 }
@@ -301,7 +311,7 @@ mark.hl4 { background: var(--hl4); }
 .tl-title { font-family: var(--serif); font-size: 0.9rem; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
 .tl-ref { color: var(--c); font-weight: 600; margin-top: auto; }
 .tl-list { display: none; list-style: none; margin: 12px 0 0; padding: 0; }
-.tl-list-period { font-family: var(--serif); font-weight: 600; font-size: 1.2rem; margin: 18px 0 4px; scroll-margin-top: 12px; }
+.tl-list-period { font-family: var(--serif); font-weight: 600; font-size: 1.2rem; margin: 18px 0 4px; scroll-margin-top: calc(var(--header-h) + 12px); }
 .tl-list-day { color: var(--accent); font-weight: 600; font-size: 0.9rem; margin: 10px 0 2px; }
 .tl-list li:not(.tl-list-period):not(.tl-list-day) { border-bottom: 1px solid var(--line); }
 .tl-list a { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 12px; padding: 8px 2px; color: var(--ink); text-decoration: none; }
