@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
-import type { Corpus, IndexedSection } from '../lib/corpus';
-import { GOSPELS, GOSPEL_NAMES, type Gospel } from '../lib/refs';
+import { useI18n } from '../i18n/context';
+import type { IndexedSection } from '../lib/corpus';
+import { GOSPELS, type Gospel } from '../lib/refs';
 import { href } from '../lib/route';
 import { relocated } from '../lib/sequence';
 
@@ -8,14 +9,16 @@ const ROW = 30; // px per row; lines are drawn to row centres, so CSS must use t
 
 const isGospel = (s?: string): s is Gospel => GOSPELS.includes(s as Gospel);
 
-export default function Order({ corpus, a: qa, b: qb }: { corpus: Corpus; a?: string; b?: string }) {
+export default function Order({ a: qa, b: qb }: { a?: string; b?: string }) {
+  const { t, names, corpus } = useI18n();
+  const o = t.order;
   const a: Gospel = isGospel(qa) ? qa : 'mark';
   const b: Gospel = isGospel(qb) && qb !== a ? qb : a === 'john' ? 'mark' : 'john';
   const [focus, setFocus] = useState<string | null>(null);
 
   useEffect(() => {
-    document.title = `Order: ${GOSPEL_NAMES[a]} and ${GOSPEL_NAMES[b]} · Gospel Parallels`;
-  }, [a, b]);
+    document.title = `${o.docTitle(names[a], names[b])} · ${t.siteName}`;
+  }, [a, b, o, names, t]);
 
   const left = corpus.sequence[a];
   const right = corpus.sequence[b];
@@ -37,37 +40,28 @@ export default function Order({ corpus, a: qa, b: qb }: { corpus: Corpus; a?: st
 
   return (
     <article className="order">
-      <h1>Where each Gospel places the story</h1>
-      <p>
-        Each column lists one Gospel’s sections from beginning to end, in the order that Gospel tells them. A line
-        joins a section to the same section in the other Gospel. Where lines cross, the two Gospels tell those events
-        in a different order.
-      </p>
+      <h1>{o.title}</h1>
+      <p>{o.intro}</p>
 
       <div className="toolbar">
         <label>
-          Left{' '}
+          {o.left}{' '}
           <select value={a} onChange={(e) => choose('a', e.target.value as Gospel)}>
-            {GOSPELS.map((g) => <option key={g} value={g}>{GOSPEL_NAMES[g]}</option>)}
+            {GOSPELS.map((g) => <option key={g} value={g}>{names[g]}</option>)}
           </select>
         </label>
         <label>
-          Right{' '}
+          {o.right}{' '}
           <select value={b} onChange={(e) => choose('b', e.target.value as Gospel)}>
-            {GOSPELS.map((g) => <option key={g} value={g}>{GOSPEL_NAMES[g]}</option>)}
+            {GOSPELS.map((g) => <option key={g} value={g}>{names[g]}</option>)}
           </select>
         </label>
       </div>
 
       <section className="order-summary">
         <p>
-          {GOSPEL_NAMES[a]} has {left.length} sections and {GOSPEL_NAMES[b]} has {right.length}; {links.length} are in
-          both.{' '}
-          {notable.length === 0
-            ? 'The two Gospels tell every shared section in the same order.'
-            : notable.length === 1
-              ? 'One section accounts for the difference in order. Set it aside, and the two Gospels tell everything else they share in the same sequence:'
-              : `These ${notable.length} sections account for the differences in order. Set them aside, and the two Gospels tell everything else they share in the same sequence:`}
+          {o.summary(names[a], left.length, names[b], right.length, links.length)}{' '}
+          {notable.length === 0 ? o.same : notable.length === 1 ? o.one : o.many(notable.length)}
         </p>
         {notable.length > 0 && (
           <ul className="notable">
@@ -75,36 +69,34 @@ export default function Order({ corpus, a: qa, b: qb }: { corpus: Corpus; a?: st
               <li key={s.id}>
                 <a href={href.section(s.id)}>{s.title}</a>{' '}
                 <span className="muted">
-                  — section {s.position[a]! + 1} of {left.length} in {GOSPEL_NAMES[a]}, {s.position[b]! + 1} of {right.length} in {GOSPEL_NAMES[b]}
+                  {o.position(s.position[a]! + 1, left.length, names[a], s.position[b]! + 1, right.length, names[b])}
                 </span>
               </li>
             ))}
           </ul>
         )}
         {notable.length > 0 && (
-          <p className="muted">
-            When two explanations are equally simple (did one Gospel move a story earlier, or the other move its
-            neighbor later?) only one is listed, so read the list as “where the order differs”, not “what the writer
-            moved”.
-          </p>
+          <p className="muted">{o.tie}</p>
         )}
       </section>
 
-      <dl className="legend" aria-label="Key">
-        <div><dt><svg width="36" height="12" aria-hidden="true"><line x1="0" y1="6" x2="36" y2="6" className="link" /></svg></dt><dd>Same section in both Gospels</dd></div>
-        <div><dt><svg width="36" height="12" aria-hidden="true"><line x1="0" y1="6" x2="36" y2="6" className="link notable" /></svg></dt><dd>A section listed above, told at a different point</dd></div>
-        <div><dt><svg width="36" height="12" aria-hidden="true"><line x1="0" y1="6" x2="36" y2="6" className="link focus" /></svg></dt><dd>The section you are pointing at</dd></div>
-        <div><dt><span className="legend-title both">Title</span></dt><dd>Also in the other Gospel (the bar is in its own column’s color)</dd></div>
-        <div><dt><span className="legend-title only">Title</span></dt><dd>Only in this Gospel, so no line</dd></div>
+      <dl className="legend" aria-label={o.legend.label}>
+        <div><dt><svg width="36" height="12" aria-hidden="true"><line x1="0" y1="6" x2="36" y2="6" className="link" /></svg></dt><dd>{o.legend.same}</dd></div>
+        <div><dt><svg width="36" height="12" aria-hidden="true"><line x1="0" y1="6" x2="36" y2="6" className="link notable" /></svg></dt><dd>{o.legend.notable}</dd></div>
+        <div><dt><svg width="36" height="12" aria-hidden="true"><line x1="0" y1="6" x2="36" y2="6" className="link focus" /></svg></dt><dd>{o.legend.focus}</dd></div>
+        <div><dt><span className="legend-title both">{o.legend.sample}</span></dt><dd>{o.legend.both}</dd></div>
+        <div><dt><span className="legend-title only">{o.legend.sample}</span></dt><dd>{o.legend.only}</dd></div>
       </dl>
 
-      {/* Headings sit outside the lanes: a heading row inside them would shift every row off its line. */}
-      <div className="lane-heads" aria-hidden="true">
-        <span className={`col-${a}`}>{GOSPEL_NAMES[a]}</span>
+      {/* Headings sit outside the lanes: a heading row inside them would shift every row off its line.
+          Both are fixed left-to-right even in Arabic: the lines are drawn from the left lane to the
+          right one, and a mirrored grid would put each line's ends on the wrong side. */}
+      <div className="lane-heads" dir="ltr" aria-hidden="true">
+        <span className={`col-${a}`}>{names[a]}</span>
         <span />
-        <span className={`col-${b}`}>{GOSPEL_NAMES[b]}</span>
+        <span className={`col-${b}`}>{names[b]}</span>
       </div>
-      <div className="lanes" style={{ height }} onMouseLeave={() => setFocus(null)}>
+      <div className="lanes" dir="ltr" style={{ height }} onMouseLeave={() => setFocus(null)}>
         <Lane list={left} g={a} other={b} side="left" focus={focus} setFocus={setFocus} />
         <svg className="links" viewBox={`0 0 100 ${height}`} preserveAspectRatio="none" height={height} aria-hidden="true">
           {links.map(({ s, y1, y2, notable }) => (
@@ -126,15 +118,16 @@ function Lane({ list, g, other, side, focus, setFocus }: {
   list: IndexedSection[]; g: Gospel; other: Gospel; side: 'left' | 'right';
   focus: string | null; setFocus: (id: string | null) => void;
 }) {
+  const { t, names } = useI18n();
   return (
-    <ol className={`lane lane-${side} col-${g}`} aria-label={`${GOSPEL_NAMES[g]} in order`}>
+    <ol className={`lane lane-${side} col-${g}`} aria-label={t.order.lane(names[g])}>
       {list.map((s) => (
         <li
           key={s.id}
           className={`${s.position[other] === undefined ? 'only' : 'both'}${focus === s.id ? ' focus' : ''}`}
           onMouseEnter={() => setFocus(s.id)}
         >
-          <a href={href.section(s.id)} title={`${s.title} — ${GOSPEL_NAMES[g]} ${s.refs[g]}`} onFocus={() => setFocus(s.id)}>
+          <a href={href.section(s.id)} title={`${s.title} — ${names[g]} ${s.refs[g]}`} dir="auto" onFocus={() => setFocus(s.id)}>
             {s.title}
           </a>
         </li>

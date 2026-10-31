@@ -7,7 +7,8 @@ export type Route =
   | { view: 'section'; id: string }
   | { view: 'passage'; query: string }
   | { view: 'order'; a?: string; b?: string }
-  | { view: 'about' };
+  | { view: 'about' }
+  | { view: 'book' };
 
 export function parse(hash: string): Route {
   const [path, qs] = hash.replace(/^#\/?/, '').split('?');
@@ -19,6 +20,7 @@ export function parse(hash: string): Route {
     case 'p': return { view: 'passage', query: arg };
     case 'order': return { view: 'order', a: params.get('a') ?? undefined, b: params.get('b') ?? undefined };
     case 'about': return { view: 'about' };
+    case 'book': return { view: 'book' };
     default: return { view: 'home' };
   }
 }
@@ -29,6 +31,7 @@ export const href = {
   passage: (q: string) => `#/p/${encodeURIComponent(q.trim()).replace(/%20/g, '+').replace(/%3A/gi, ':')}`,
   order: (a: string, b: string) => `#/order?a=${a}&b=${b}`,
   about: () => '#/about',
+  book: () => '#/book',
 };
 
 export function useRoute(): Route {

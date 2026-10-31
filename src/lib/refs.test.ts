@@ -1,10 +1,13 @@
 import { describe, expect, it } from 'vitest';
-import text from '../data/gospels.json';
-import { lengthsOf, type GospelText } from './corpus';
+import text from '../data/text/en.json';
+import { lengthsOf, type TextFile } from './corpus';
 import { formatPassage, parseLookup, parseRanges, RefError } from './refs';
-import { sharedWords, tokens } from './shared';
+import en from '../i18n/dict/en';
+import { matcher, sharedWords } from './shared';
 
-const lengths = lengthsOf(text as GospelText);
+const english = matcher('en', en.stopWords, en.minWordLength);
+
+const lengths = lengthsOf((text as TextFile).books);
 const look = (s: string) => formatPassage(parseLookup(s, lengths));
 
 describe('parseLookup', () => {
@@ -33,13 +36,13 @@ describe('parseLookup', () => {
 
 describe('shared wording', () => {
   it('ignores common words and counts each account once', () => {
-    const shared = sharedWords(['The wind ceased and the wind obeyed.', 'He rebuked the wind.', 'The sea was calm.']);
+    const shared = sharedWords(['The wind ceased and the wind obeyed.', 'He rebuked the wind.', 'The sea was calm.'], english);
     expect([...shared]).toEqual([['wind', 2]]);
   });
 
   it('keeps punctuation outside highlighted words', () => {
-    expect(tokens('“Peace, be still!”')).toEqual([
-      { text: '“' }, { text: 'Peace', word: 'peace' }, { text: ',' }, { text: ' ' },
+    expect(english.tokens('“Peace, be still!”')).toEqual([
+      { text: '“' }, { text: 'Peace', word: 'peace' }, { text: ', ' },
       { text: 'be', word: 'be' }, { text: ' ' }, { text: 'still', word: 'still' }, { text: '!”' },
     ]);
   });

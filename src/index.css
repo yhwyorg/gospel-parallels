@@ -25,12 +25,36 @@
   --link-notable: #7b3fa0;
   --link-focus: #23201c;
 
-  --serif: 'Iowan Old Style', 'Palatino Linotype', Palatino, 'Book Antiqua', Charter, Georgia, serif;
-  --sans: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --serif: 'Iowan Old Style', 'Palatino Linotype', Palatino, 'Book Antiqua', Charter, Georgia, 'Noto Serif', serif;
+  --sans: system-ui, -apple-system, 'Segoe UI', Roboto, 'Noto Sans', sans-serif;
   color-scheme: light;
 }
 
-@media (prefers-color-scheme: dark) {
+/* Scripts the default serif stacks do not cover. Noto names come first because the
+   book's PDFs are printed on Linux with Noto installed (see the deploy workflow);
+   the rest are what Windows and macOS readers have. */
+:root:lang(zh-Hans) {
+  --serif: 'Noto Serif CJK SC', 'Noto Serif SC', 'Songti SC', SimSun, serif;
+  --sans: 'Noto Sans CJK SC', 'PingFang SC', 'Microsoft YaHei', system-ui, sans-serif;
+}
+:root:lang(zh-Hant) {
+  --serif: 'Noto Serif CJK TC', 'Noto Serif TC', 'Songti TC', PMingLiU, serif;
+  --sans: 'Noto Sans CJK TC', 'PingFang TC', 'Microsoft JhengHei', system-ui, sans-serif;
+}
+:root:lang(ko) {
+  --serif: 'Noto Serif CJK KR', 'Noto Serif KR', AppleMyungjo, Batang, serif;
+  --sans: 'Noto Sans CJK KR', 'Apple SD Gothic Neo', 'Malgun Gothic', system-ui, sans-serif;
+}
+:root:lang(ar) {
+  --serif: 'Noto Naskh Arabic', 'Geeza Pro', 'Traditional Arabic', 'Times New Roman', serif;
+  --sans: 'Noto Sans Arabic', 'Geeza Pro', 'Segoe UI', Tahoma, sans-serif;
+}
+/* Italic has no meaning in these scripts and browsers fake it by slanting the glyphs. */
+:lang(zh-Hans) .note, :lang(zh-Hant) .note, :lang(ko) .note, :lang(ar) .note,
+:lang(zh-Hans) .absent-line, :lang(zh-Hant) .absent-line, :lang(ko) .absent-line, :lang(ar) .absent-line { font-style: normal; }
+
+/* Screen only: printing always uses the light palette, or dark-mode colors would print pale on white paper. */
+@media screen and (prefers-color-scheme: dark) {
   :root:not([data-theme='light']) {
     --bg: #17150f;
     --surface: #1f1c16;
@@ -85,13 +109,14 @@ h1 { font-size: clamp(1.6rem, 4vw, 2.2rem); margin: 1.5rem 0 0.75rem; }
 /* Header */
 .site-header { background: var(--surface); border-bottom: 1px solid var(--line); }
 .header-row { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 24px; padding-top: 12px; padding-bottom: 12px; }
-.brand { display: flex; flex-direction: column; text-decoration: none; color: var(--ink); margin-right: auto; }
+.brand { display: flex; flex-direction: column; text-decoration: none; color: var(--ink); margin-inline-end: auto; }
 .brand-title { font-family: var(--serif); font-size: 1.45rem; font-weight: 600; }
 .brand-sub { font-size: 0.82rem; color: var(--muted); }
 .nav { display: flex; gap: 16px; }
 .nav a { color: var(--ink); text-decoration: none; padding: 4px 0; border-bottom: 2px solid transparent; }
 .nav a[aria-current='page'] { border-bottom-color: var(--accent); }
 .lookup { display: flex; gap: 6px; flex: 1 1 280px; max-width: 420px; }
+.language select { padding: 6px 8px; }
 .lookup input { flex: 1; min-width: 0; }
 
 input, select, button { font: inherit; color: inherit; }
@@ -127,6 +152,10 @@ main { padding-bottom: 48px; min-height: 60vh; }
 }
 .section-list a:hover { background: var(--surface); }
 .row-title { font-family: var(--serif); font-size: 1.08rem; }
+.num { font-family: var(--sans); font-size: 0.78em; font-weight: 600; color: var(--muted); }
+.reader > .num { margin: 1.5rem 0 -1rem; font-size: 0.9rem; }
+a.button { display: inline-block; border: 1px solid var(--line); border-radius: 6px; padding: 7px 14px; text-decoration: none; color: var(--ink); background: var(--surface); }
+a.button.primary { background: var(--accent); border-color: var(--accent); color: var(--bg); font-weight: 600; }
 .row-refs { display: flex; flex-wrap: wrap; gap: 4px 14px; font-size: 0.85rem; }
 .ref abbr { text-decoration: none; font-weight: 700; }
 .ref-matthew { color: var(--matthew); }
@@ -156,11 +185,11 @@ main { padding-bottom: 48px; min-height: 60vh; }
 .col-john { --c: var(--john); }
 .column header { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 10px; margin-bottom: 8px; }
 .column h2 { margin: 0; font-size: 1.3rem; color: var(--c); }
-.col-ref { color: var(--muted); font-size: 0.9rem; margin-right: auto; }
+.col-ref { color: var(--muted); font-size: 0.9rem; margin-inline-end: auto; }
 .absent-line { color: var(--muted); font-style: italic; margin: 0 0 12px; }
 
 .text { font-family: var(--serif); font-size: 1.12rem; line-height: 1.7; }
-.vn { font-family: var(--sans); font-size: 0.66em; color: var(--muted); margin-right: 2px; font-weight: 600; }
+.vn { font-family: var(--sans); font-size: 0.66em; color: var(--muted); margin-inline-end: 2px; font-weight: 600; }
 .vn.ch { color: var(--c); }
 .chapter-break { display: block; height: 0.5em; }
 .verse.target { background: var(--target); box-shadow: 0 0 0 2px var(--target); border-radius: 2px; }
@@ -173,13 +202,13 @@ mark.hl4 { background: var(--hl4); }
 .context { margin-top: 14px; padding-top: 10px; border-top: 1px solid var(--line); font-size: 0.88rem; }
 .where { margin: 0 0 6px; color: var(--muted); }
 .prevnext { display: flex; justify-content: space-between; gap: 12px; }
-.prevnext > :last-child { text-align: right; }
+.prevnext > :last-child { text-align: end; }
 .prevnext span { color: var(--muted); }
 
 /* Order */
 .order > p { max-width: 50rem; color: var(--muted); }
 .order-summary { max-width: 56rem; }
-.notable { padding-left: 1.2rem; }
+.notable { padding-inline-start: 1.2rem; }
 .notable li { margin: 3px 0; }
 .muted { color: var(--muted); font-size: 0.9rem; }
 
@@ -217,10 +246,10 @@ mark.hl4 { background: var(--hl4); }
 .legend-title.both { box-shadow: inset 3px 0 0 var(--muted); }
 .legend-title.only { color: var(--muted); }
 
-.key-item { margin-right: 6px; }
+.key-item { margin-inline-end: 6px; }
 .purple { color: var(--link-notable); }
 .gospel-key { display: flex; flex-wrap: wrap; gap: 4px 16px; font-size: 0.9rem; margin: 0 0 8px; }
-.swatch { display: inline-block; width: 0.8em; height: 0.8em; border-radius: 2px; background: var(--c); margin-right: 5px; vertical-align: -0.05em; }
+.swatch { display: inline-block; width: 0.8em; height: 0.8em; border-radius: 2px; background: var(--c); margin-inline-end: 5px; vertical-align: -0.05em; }
 
 /* About */
 .about { max-width: 46rem; font-size: 1.05rem; }
@@ -240,11 +269,61 @@ mark.hl4 { background: var(--hl4); }
   .lookup { max-width: none; }
 }
 
+/* Book: on screen, a preview of the printed volume below the download panel. */
+.book-screen { max-width: 46rem; border-bottom: 1px solid var(--line); padding-bottom: 12px; margin-bottom: 24px; }
+.book-pages > section { margin-bottom: 2.5rem; }
+.title-page { text-align: center; padding: 3rem 0; border-bottom: 1px solid var(--line); }
+.book-title { font-family: var(--serif); font-size: 2.6rem; font-weight: 600; margin: 0; }
+.book-sub { font-family: var(--serif); font-size: 1.3rem; color: var(--muted); margin: 0.3rem 0 2.5rem; }
+.book-scripture, .book-url { color: var(--muted); margin: 0.3rem 0; }
+/* The dedication's "About this site" heading suits the site, not a printed volume. */
+.book-dedication h1 { display: none; }
+.book-dedication .soli { margin-top: 0; }
+.book-howto, .book-index, .book-credits { max-width: 46rem; }
+.book-contents ol { list-style: none; padding: 0; columns: 2; column-gap: 2rem; font-family: var(--serif); }
+.book-contents li { break-inside: avoid; margin: 2px 0; }
+.book-section > h2 { margin: 0 0 0.3rem; }
+.book-section .note { margin-bottom: 0.5rem; }
+.index-cols { columns: 3; column-gap: 2rem; font-size: 0.9rem; }
+.index-cols h3 { font-family: var(--serif); color: var(--c); margin: 0.6rem 0 0.2rem; break-after: avoid; }
+.index-cols ul { list-style: none; padding: 0; margin: 0 0 0.8rem; }
+.index-cols li { break-inside: avoid; }
+
 @media print {
-  .site-header, .site-footer, .reader-tools, .hint, .jump, .context, .column button, .found { display: none; }
+  .site-header, .site-footer, .reader-tools, .hint, .jump, .context, .column button, .found, .book-screen { display: none; }
   body { background: #fff; color: #000; font-size: 11pt; }
   .wrap { max-width: none; padding: 0; }
+  main { padding: 0; min-height: 0; }
   .columns { gap: 10px; }
   .column { break-inside: auto; border-color: #bbb; }
   .text { font-size: 10.5pt; line-height: 1.45; }
+  /* Colour carries meaning here (which Gospel a column is), so keep it on paper. */
+  .column, .swatch, .ref-matthew, .ref-mark, .ref-luke, .ref-john { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+
+  .book { font-size: 10pt; }
+  .book-pages > section { margin-bottom: 0; }
+  .title-page { border: none; padding-top: 30vh; break-after: page; }
+  .book-dedication, .book-howto, .book-contents { break-after: page; border: none; }
+  .book-index, .book-credits { break-before: page; }
+  .book-contents ol { font-size: 9pt; }
+  .book-section { padding-top: 10pt; }
+  .book-section > h2 { font-size: 13pt; break-after: avoid; }
+  .book-section .note, .book-section .absent-line { font-size: 9pt; break-after: avoid; margin: 0 0 4pt; }
+  .book .columns { gap: 8pt; }
+  .book .column { background: none; border: none; border-top: 2.5pt solid var(--c); border-radius: 0; padding: 3pt 0 0; }
+  .book .column h2 { font-size: 10.5pt; }
+  /* A Gospel's name and reference must not end a page with its text on the next. */
+  .book .column > header { break-after: avoid; break-inside: avoid; }
+  .book .text { orphans: 3; widows: 3; }
+  .book .col-ref { font-size: 8.5pt; }
+  .book .text { font-size: 9.5pt; line-height: 1.38; }
+  .book .columns.n4 .text { font-size: 9pt; }
+  /* A section only one Gospel tells runs the full width; newspaper columns keep its lines a readable length. */
+  .book .columns.n1 { grid-template-columns: minmax(0, 1fr); }
+  .book .columns.n1 .text { columns: 2; column-gap: 14pt; }
+  .book .columns, .book .columns.n4, .book .columns.n3, .book .columns.n2 { break-before: avoid; }
+  .book .columns.n4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .book .columns.n3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .book .columns.n2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .index-cols { font-size: 8.5pt; columns: 4; }
 }

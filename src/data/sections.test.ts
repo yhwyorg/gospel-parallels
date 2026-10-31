@@ -1,11 +1,11 @@
 import { describe, expect, it } from 'vitest';
-import text from './gospels.json';
+import text from './text/en.json';
 import { sections } from './sections';
-import { buildCorpus, lengthsOf, sectionsFor, versesOf, type GospelText } from '../lib/corpus';
+import { buildCorpus, lengthsOf, sectionsFor, versesOf, type TextFile } from '../lib/corpus';
 import { GOSPELS, formatRange, key, parseRanges, versesIn } from '../lib/refs';
 
-const corpus = buildCorpus(text as GospelText);
-const lengths = lengthsOf(text as GospelText);
+const corpus = buildCorpus(text as TextFile);
+const lengths = lengthsOf((text as TextFile).books);
 
 describe('gospel text', () => {
   it('has every verse of the four Gospels', () => {
@@ -74,11 +74,19 @@ describe('sections', () => {
   });
 });
 
+describe('typography', () => {
+  it('uses curly quotes and apostrophes in titles and notes', () => {
+    // One straight apostrophe slipped through and stood out in the printed book's contents.
+    const straight = sections.flatMap((s) => [s.title, s.note ?? '']).filter((x) => /['"]/.test(x));
+    expect(straight).toEqual([]);
+  });
+});
+
 describe('notes', () => {
   it('quote the World English Bible exactly', () => {
     // Notes quote Scripture in curly quotes; a misquote would sit beside the real text.
     const fold = (s: string) => s.replace(/[“”‘’]/g, '').toLowerCase();
-    const all = fold(Object.values(text as GospelText).flat(2).join(' '));
+    const all = fold(Object.values((text as TextFile).books).flat(2).join(' '));
     const quotes = sections.flatMap((s) => [...(s.note ?? '').matchAll(/“([^”]+)”/g)].map((m) => [s.id, m[1]]));
     expect(quotes.length).toBeGreaterThan(3);
     expect(quotes.filter(([, q]) => !all.includes(fold(q)))).toEqual([]);

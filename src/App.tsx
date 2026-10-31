@@ -1,71 +1,119 @@
 import { useEffect, useState, type FormEvent } from 'react';
-import { buildCorpus, type Corpus, type GospelText } from './lib/corpus';
 import { href, useRoute } from './lib/route';
+import { isolateRefs } from './lib/refs';
+import { I18nProvider, loadLocale, useI18n, type I18n } from './i18n/context';
+import { LOCALES, LOCALE_INFO, initialLocale, remember, type Locale } from './i18n/locales';
 import Home from './views/Home';
 import Reader from './views/Reader';
 import Passage from './views/Passage';
 import Order from './views/Order';
 import About from './views/About';
+import Book from './views/Book';
 
-type Load = { state: 'loading' } | { state: 'ready'; corpus: Corpus } | { state: 'failed'; message: string };
+type Load = { state: 'loading' } | { state: 'ready'; i18n: I18n } | { state: 'failed'; message: string };
 
 export default function App() {
-  const route = useRoute();
+  const [locale, setLocale] = useState<Locale>(initialLocale);
   const [load, setLoad] = useState<Load>({ state: 'loading' });
 
   useEffect(() => {
-    // Loaded separately so the page frame appears before ~440 KB of text arrives.
-    import('./data/gospels.json')
-      .then((m) => setLoad({ state: 'ready', corpus: buildCorpus(m.default as GospelText) }))
-      .catch((e: Error) => setLoad({ state: 'failed', message: e.message }));
-  }, []);
+    let live = true;
+    // The previous language stays on screen until the new one has fully arrived, so
+    // switching never shows a page half in one language and half in another.
+    loadLocale(locale)
+      .then((i18n) => live && setLoad({ state: 'ready', i18n }))
+      .catch((e: Error) => live && setLoad({ state: 'failed', message: `${locale}: ${e.message}` }));
+    return () => {
+      live = false;
+    };
+  }, [locale]);
+
+  useEffect(() => {
+    if (load.state !== 'ready') return;
+    document.documentElement.lang = load.i18n.locale;
+    document.documentElement.dir = load.i18n.info.dir;
+  }, [load]);
+
+  const choose = (l: Locale) => {
+    remember(l);
+    setLocale(l);
+  };
+
+  if (load.state === 'loading') return <p className="status wrap">…</p>;
+  if (load.state === 'failed') {
+    // Loud on purpose, and in English because no dictionary loaded: an empty page here
+    // would look like a working site with no content.
+    return (
+      <div className="status error wrap" role="alert">
+        <strong>The site could not be loaded.</strong> {load.message}. Try reloading the page.
+      </div>
+    );
+  }
+  return (
+    <I18nProvider value={load.i18n}>
+      <Site locale={locale} choose={choose} />
+    </I18nProvider>
+  );
+}
+
+function Site({ locale, choose }: { locale: Locale; choose: (l: Locale) => void }) {
+  const route = useRoute();
+  const { t, info, licence } = useI18n();
+  const tr = info.translation;
 
   return (
     <>
       <header className="site-header">
         <div className="wrap header-row">
           <a className="brand" href={href.home()}>
-            <span className="brand-title">Gospel Parallels</span>
-            <span className="brand-sub">The four Gospels, side by side</span>
+            <span className="brand-title">{t.siteName}</span>
+            <span className="brand-sub">{t.tagline}</span>
           </a>
           <nav className="nav">
-            <a href={href.home()} aria-current={route.view === 'home' ? 'page' : undefined}>Sections</a>
-            <a href={href.order('mark', 'john')} aria-current={route.view === 'order' ? 'page' : undefined}>Order</a>
-            <a href={href.about()} aria-current={route.view === 'about' ? 'page' : undefined}>About</a>
+            <a href={href.home()} aria-current={route.view === 'home' ? 'page' : undefined}>{t.nav.sections}</a>
+            <a href={href.order('mark', 'john')} aria-current={route.view === 'order' ? 'page' : undefined}>{t.nav.order}</a>
+            <a href={href.book()} aria-current={route.view === 'book' ? 'page' : undefined}>{t.nav.book}</a>
+            <a href={href.about()} aria-current={route.view === 'about' ? 'page' : undefined}>{t.nav.about}</a>
           </nav>
           <Lookup initial={route.view === 'passage' ? route.query : ''} />
+          <label className="language">
+            <span className="visually-hidden">{t.language}</span>
+            <select value={locale} onChange={(e) => choose(e.target.value as Locale)} aria-label={t.language}>
+              {LOCALES.map((l) => (
+                // Each name in its own language, so a reader can find theirs whatever the page is in.
+                <option key={l} value={l} lang={l}>{LOCALE_INFO[l].native}</option>
+              ))}
+            </select>
+          </label>
         </div>
       </header>
 
       <main className="wrap">
         {route.view === 'about' ? (
           <About />
-        ) : load.state === 'loading' ? (
-          <p className="status">Loading the Gospels…</p>
-        ) : load.state === 'failed' ? (
-          // Loud on purpose: an empty page here would look like a working site with no content.
-          <div className="status error" role="alert">
-            <strong>The Gospel text could not be loaded.</strong> {load.message}. Try reloading the page.
-          </div>
+        ) : route.view === 'book' ? (
+          <Book />
         ) : route.view === 'section' ? (
-          <Reader corpus={load.corpus} id={route.id} />
+          <Reader id={route.id} />
         ) : route.view === 'passage' ? (
-          <Passage corpus={load.corpus} query={route.query} />
+          <Passage query={route.query} />
         ) : route.view === 'order' ? (
-          <Order corpus={load.corpus} a={route.a} b={route.b} />
+          <Order a={route.a} b={route.b} />
         ) : (
-          <Home corpus={load.corpus} />
+          <Home />
         )}
       </main>
 
       <footer className="site-footer wrap">
-        Scripture from the <a href="https://worldenglish.bible/">World English Bible</a> (public domain).
+        {t.footer(<a href={tr.url}>{tr.name}</a>, licence)}
+        {tr.attribution && <> {tr.attribution}</>}
       </footer>
     </>
   );
 }
 
 function Lookup({ initial }: { initial: string }) {
+  const { t } = useI18n();
   const [q, setQ] = useState(initial);
   useEffect(() => setQ(initial), [initial]);
   const submit = (e: FormEvent) => {
@@ -74,16 +122,16 @@ function Lookup({ initial }: { initial: string }) {
   };
   return (
     <form className="lookup" onSubmit={submit} role="search">
-      <label htmlFor="lookup" className="visually-hidden">Find a passage</label>
+      <label htmlFor="lookup" className="visually-hidden">{t.lookup.label}</label>
       <input
         id="lookup"
         value={q}
         onChange={(e) => setQ(e.target.value)}
-        placeholder="Find a passage, e.g. Luke 15:11-32"
+        placeholder={isolateRefs(t.lookup.placeholder)}
         autoComplete="off"
         spellCheck={false}
       />
-      <button type="submit">Go</button>
+      <button type="submit">{t.lookup.go}</button>
     </form>
   );
 }

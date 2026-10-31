@@ -31,6 +31,14 @@ jobs:
       - run: npm test
       - run: npm run lint
       - run: npm run build
+      # The downloadable books are printed from the built site by headless Chromium.
+      # Noto supplies the Chinese, Korean and Arabic fonts the stylesheet names;
+      # without them the PDFs would print those scripts as empty boxes, and
+      # scripts/build-books.mjs fails the deploy if any text is drawn in a font the
+      # stylesheet does not name.
+      - run: sudo apt-get update && sudo apt-get install -y --no-install-recommends fonts-noto-core fonts-noto-cjk
+      - run: npx playwright install --with-deps chromium
+      - run: npm run books
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:

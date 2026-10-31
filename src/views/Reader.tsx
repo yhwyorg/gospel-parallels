@@ -1,10 +1,10 @@
-import { Fragment, useEffect, useMemo, useState } from 'react';
-import { neighbours, versesOf, type Corpus, type IndexedSection, type Verse } from '../lib/corpus';
-import { GOSPELS, GOSPEL_NAMES, formatRange, key, type Gospel, type Passage } from '../lib/refs';
+import { useEffect, useMemo, useState } from 'react';
+import { useI18n } from '../i18n/context';
+import { columnsOf, neighbours, verseLabel, type IndexedSection, type Verse } from '../lib/corpus';
+import { formatRange, isolateRefs, type Gospel, type Passage } from '../lib/refs';
 import { href } from '../lib/route';
-import { sharedWords, tokens } from '../lib/shared';
-
-const OMITTED = 'This verse is not included in the World English Bible text.';
+import { sharedWords } from '../lib/shared';
+import { AbsentLine, Columns } from './Columns';
 
 // Per-viewer reading preferences. Storage can be unavailable (private windows,
 // blocked site data); the page must work identically without it.
@@ -28,151 +28,112 @@ function usePref(name: string, initial: boolean): [boolean, (v: boolean) => void
   return [v, set];
 }
 
-export default function Reader({ corpus, id, target }: { corpus: Corpus; id: string; target?: Passage }) {
+export default function Reader({ id, target }: { id: string; target?: Passage }) {
+  const { t, names, corpus, matcher, info } = useI18n();
   const section = corpus.byId.get(id);
   const [highlight, setHighlight] = usePref('highlight', false);
   const [numbers, setNumbers] = usePref('numbers', true);
 
   useEffect(() => {
-    document.title = section ? `${section.title} · Gospel Parallels` : 'Gospel Parallels';
-  }, [section]);
+    document.title = section ? `${section.title} · ${t.siteName}` : t.siteName;
+  }, [section, t]);
 
-  const columns = useMemo(
-    () => (section ? GOSPELS.map((g) => ({ g, verses: section.ranges[g] ? versesOf(corpus, g, section.ranges[g]!) : null })) : []),
-    [corpus, section],
-  );
-  const present = columns.filter((c) => c.verses);
+  const columns = useMemo(() => (section ? columnsOf(section, corpus) : []), [corpus, section]);
   const shared = useMemo(
-    () => sharedWords(present.map((c) => c.verses!.map((v) => v.text).join(' '))),
-    [present],
+    () => sharedWords(columns.map((c) => c.verses.map((v) => v.text).join(' ')), matcher),
+    [columns, matcher],
   );
 
   if (!section) {
     return (
       <div className="status error" role="alert">
-        There is no section called “{id}”. <a href={href.home()}>See all sections</a>.
+        {t.reader.notFound(id)} <a href={href.home()}>{t.reader.seeAll}</a>.
       </div>
     );
   }
 
-  const absent = columns.filter((c) => !c.verses).map((c) => GOSPEL_NAMES[c.g]);
-  const copyAll = present.map((c) => plain(c.g, section, c.verses!)).join('\n\n');
+  const plain = (g: Gospel, verses: Verse[]) => {
+    const body = verses
+      .filter((v) => v.joinedTo === undefined)
+      .map((v) => `${verseLabel(v, false)} ${v.text || `[${t.reader.omitted(info.translation.name)}]`}`)
+      .join(' ');
+    return `${names[g]} ${section.ranges[g]!.map(formatRange).join('; ')} (${info.translation.abbr})\n${body}`;
+  };
+  const copyAll = columns.map((c) => plain(c.g, c.verses)).join('\n\n');
 
   return (
     <article className="reader">
+      <p className="num"><bdi dir="ltr">§{section.number}</bdi></p>
       <h1>{section.title}</h1>
-      {section.note && <p className="note">{section.note}</p>}
+      {section.note && <p className="note">{isolateRefs(section.note)}</p>}
 
       <div className="toolbar reader-tools">
         <label className="check">
-          <input type="checkbox" checked={highlight} onChange={(e) => setHighlight(e.target.checked)} disabled={present.length < 2} />
-          Shade shared words
+          <input type="checkbox" checked={highlight} onChange={(e) => setHighlight(e.target.checked)} disabled={columns.length < 2} />
+          {t.reader.shade}
         </label>
         <label className="check">
           <input type="checkbox" checked={numbers} onChange={(e) => setNumbers(e.target.checked)} />
-          Verse numbers
+          {t.reader.numbers}
         </label>
-        <CopyButton text={copyAll} label="Copy all" />
-        <button type="button" onClick={() => print()}>Print</button>
+        <CopyButton text={copyAll} label={t.reader.copyAll} />
+        <button type="button" onClick={() => print()}>{t.reader.print}</button>
       </div>
-      {highlight && present.length > 1 && (
+      {highlight && columns.length > 1 && (
         <p className="hint key">
-          Words found in more than one account are shaded:{' '}
-          <span className="key-item"><mark className="hl2">in 2</mark></span>
-          <span className="key-item"><mark className="hl3">in 3</mark></span>
-          <span className="key-item"><mark className="hl4">in all 4</mark></span>
-          This compares English words in one translation, not the Greek, so it is a pointer for the eye rather than an
-          analysis.
+          {t.reader.shadeIntro}{' '}
+          <span className="key-item"><mark className="hl2">{t.reader.in2}</mark></span>
+          <span className="key-item"><mark className="hl3">{t.reader.in3}</mark></span>
+          <span className="key-item"><mark className="hl4">{t.reader.in4}</mark></span>
+          {t.reader.shadeCaveat}
         </p>
       )}
 
-      {present.length > 1 && (
-        <nav className="jump" aria-label="Jump to a Gospel">
-          {present.map((c) => (
+      {columns.length > 1 && (
+        <nav className="jump" aria-label={t.reader.jumpLabel}>
+          {columns.map((c) => (
             <a key={c.g} href={`#col-${c.g}`} className={`ref-${c.g}`} onClick={(e) => jump(e, c.g)}>
-              {GOSPEL_NAMES[c.g]}
+              {names[c.g]}
             </a>
           ))}
         </nav>
       )}
 
-      {absent.length > 0 && (
-        // Stated outright so "not in this Gospel" never looks like "failed to load".
-        <p className="absent-line">Not in {absent.join(', ').replace(/, ([^,]*)$/, ' or $1')}.</p>
-      )}
+      <AbsentLine section={section} />
 
-      <div className={`columns n${present.length}`}>
-        {present.map(({ g, verses }) => (
-          <section key={g} id={`col-${g}`} className={`column col-${g}`}>
-            <header>
-              <h2>{GOSPEL_NAMES[g]}</h2>
-              <span className="col-ref">{section.ranges[g]!.map(formatRange).join('; ')}</span>
-              <CopyButton text={plain(g, section, verses!)} label="Copy" small />
-            </header>
-            {verses && (
-              <>
-                <div className="text">
-                  {verses.map((v, i) => (
-                    <Fragment key={`${v.chapter}:${v.verse}`}>
-                      {i > 0 && verses[i - 1].chapter !== v.chapter && <span className="chapter-break" />}
-                      <VerseText
-                        v={v}
-                        numbers={numbers}
-                        chapterStart={i === 0 || verses[i - 1].chapter !== v.chapter}
-                        shared={highlight ? shared : undefined}
-                        isTarget={target?.gospel === g && target.ranges.some((r) => key(v.chapter, v.verse) >= r.start && key(v.chapter, v.verse) <= r.end)}
-                      />{' '}
-                    </Fragment>
-                  ))}
-                </div>
-                <Context corpus={corpus} section={section} g={g} />
-              </>
-            )}
-          </section>
-        ))}
-      </div>
+      <Columns
+        section={section}
+        columns={columns}
+        numbers={numbers}
+        shared={highlight && columns.length > 1 ? shared : undefined}
+        target={target}
+        header={(g, verses) => <CopyButton text={plain(g, verses)} label={t.reader.copy} small />}
+        footer={(g) => <Context section={section} g={g} />}
+        ids
+      />
     </article>
   );
 }
 
-function VerseText({ v, numbers, chapterStart, shared, isTarget }: {
-  v: Verse; numbers: boolean; chapterStart: boolean; shared?: Map<string, number>; isTarget: boolean;
-}) {
-  const label = chapterStart ? `${v.chapter}:${v.verse}` : String(v.verse);
-  return (
-    <span className={isTarget ? 'verse target' : 'verse'}>
-      {numbers && <sup className={chapterStart ? 'vn ch' : 'vn'}>{label}</sup>}
-      {v.text === '' ? (
-        <span className="omitted">[{OMITTED}]</span>
-      ) : shared ? (
-        tokens(v.text).map((t, i) => {
-          const n = t.word ? shared.get(t.word) : undefined;
-          return n ? <mark key={i} className={`hl${Math.min(n, 4)}`}>{t.text}</mark> : <Fragment key={i}>{t.text}</Fragment>;
-        })
-      ) : (
-        v.text
-      )}
-    </span>
-  );
-}
-
-function Context({ corpus, section, g }: { corpus: Corpus; section: IndexedSection; g: Gospel }) {
+function Context({ section, g }: { section: IndexedSection; g: Gospel }) {
+  const { t, names, corpus, info } = useI18n();
   const { prev, next } = neighbours(corpus, section, g);
   const n = corpus.sequence[g].length;
+  // Arrows point the way the text runs: "back" is to the right in Arabic.
+  const [back, on] = info.dir === 'rtl' ? ['→', '←'] : ['←', '→'];
   return (
     <footer className="context">
-      <p className="where">
-        Section {section.position[g]! + 1} of {n} in {GOSPEL_NAMES[g]}
-      </p>
+      <p className="where">{t.reader.sectionOf(section.position[g]! + 1, n, names[g])}</p>
       <div className="prevnext">
-        {prev ? <a href={href.section(prev.id)}>← {prev.title}</a> : <span>Beginning of {GOSPEL_NAMES[g]}</span>}
-        {next ? <a href={href.section(next.id)}>{next.title} →</a> : <span>End of {GOSPEL_NAMES[g]}</span>}
+        {prev ? <a href={href.section(prev.id)}>{back} {prev.title}</a> : <span>{t.reader.beginning(names[g])}</span>}
+        {next ? <a href={href.section(next.id)}>{next.title} {on}</a> : <span>{t.reader.end(names[g])}</span>}
       </div>
     </footer>
   );
 }
 
 function CopyButton({ text, label, small }: { text: string; label: string; small?: boolean }) {
+  const { t } = useI18n();
   const [state, setState] = useState<'idle' | 'done' | 'failed'>('idle');
   const copy = async () => {
     try {
@@ -185,14 +146,9 @@ function CopyButton({ text, label, small }: { text: string; label: string; small
   };
   return (
     <button type="button" className={small ? 'small' : undefined} onClick={copy}>
-      {state === 'done' ? 'Copied' : state === 'failed' ? 'Copy failed' : label}
+      {state === 'done' ? t.reader.copied : state === 'failed' ? t.reader.copyFailed : label}
     </button>
   );
-}
-
-function plain(g: Gospel, section: IndexedSection, verses: Verse[]): string {
-  const body = verses.map((v) => `${v.verse} ${v.text || `[${OMITTED}]`}`).join(' ');
-  return `${GOSPEL_NAMES[g]} ${section.ranges[g]!.map(formatRange).join('; ')} (WEB)\n${body}`;
 }
 
 function jump(e: React.MouseEvent, g: Gospel) {

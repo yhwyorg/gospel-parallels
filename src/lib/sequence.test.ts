@@ -1,10 +1,10 @@
 import { describe, expect, it } from 'vitest';
-import text from '../data/gospels.json';
-import { buildCorpus, type GospelText } from './corpus';
+import text from '../data/text/en.json';
+import { buildCorpus, type TextFile } from './corpus';
 import { GOSPELS, type Gospel } from './refs';
 import { relocated } from './sequence';
 
-const corpus = buildCorpus(text as GospelText);
+const corpus = buildCorpus(text as TextFile);
 const moved = (a: Gospel, b: Gospel) => [...relocated(corpus, a, b)];
 
 describe('relocated', () => {

@@ -152,7 +152,7 @@ export const sections: Section[] = [
 
   // Galilee, continued
   { id: 'centurion', title: "Healing of the centurion’s servant", refs: { matthew: '8:5-13', luke: '7:1-10' } },
-  { id: 'widow-nain', title: 'Raising of the widow\'s son at Nain', refs: { luke: '7:11-17' } },
+  { id: 'widow-nain', title: 'Raising of the widow’s son at Nain', refs: { luke: '7:11-17' } },
   { id: 'baptist-question', title: "John the Baptist’s question; Jesus’ witness to John", refs: { matthew: '11:2-19', luke: '7:18-35' } },
   {
     id: 'sinful-woman',
@@ -264,7 +264,7 @@ export const sections: Section[] = [
   { id: 'friend-midnight', title: 'The friend at midnight', refs: { luke: '11:5-8' } },
   {
     id: 'woes-at-dinner',
-    title: 'Woes spoken at a Pharisee\'s table',
+    title: 'Woes spoken at a Pharisee’s table',
     refs: { luke: '11:37-54' },
     note: 'Much of this parallels the denunciation of the scribes and Pharisees in Matthew 23, which Matthew places in the temple in the final week.',
   },
@@ -321,7 +321,7 @@ export const sections: Section[] = [
     id: 'plot',
     title: 'The plot to kill Jesus',
     refs: { matthew: '26:1-5', mark: '14:1-2', luke: '22:1-2', john: '11:45-57' },
-    note: 'John ties the council\'s decision directly to the raising of Lazarus.',
+    note: 'John ties the council’s decision directly to the raising of Lazarus.',
   },
   {
     id: 'bethany-anointing',
@@ -368,7 +368,7 @@ export const sections: Section[] = [
   { id: 'passover-preparation', title: 'Preparing the Passover', refs: { matthew: '26:17-19', mark: '14:12-16', luke: '22:7-13' } },
   {
     id: 'footwashing',
-    title: 'Jesus washes the disciples\' feet',
+    title: 'Jesus washes the disciples’ feet',
     refs: { john: '13:1-20' },
     note: 'In Matthew, Mark and Luke the last supper is a Passover meal (Mark 14:12). John sets it “before the feast of the Passover” (John 13:1), with the crucifixion on the day of Preparation (John 19:14).',
   },
