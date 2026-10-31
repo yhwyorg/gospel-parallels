@@ -1,3 +1,5 @@
+import published from './published.json';
+
 export const LOCALES = ['en', 'es', 'fr', 'pt', 'de', 'ru', 'ar', 'zh-Hans', 'zh-Hant', 'ko', 'tl'] as const;
 export type Locale = (typeof LOCALES)[number];
 
@@ -91,19 +93,32 @@ export const LOCALE_INFO: Record<Locale, LocaleInfo> = {
 export const isLocale = (s: unknown): s is Locale => LOCALES.includes(s as Locale);
 
 /**
+ * Languages offered to the public: in the menu, chosen from the browser, and
+ * printed as PDFs (scripts/build-books.mjs reads the same file). The others are
+ * built and tested but held back until a native speaker has reviewed them; a
+ * reviewer can still open one with ?lang=es. A typo here throws at load rather
+ * than quietly dropping a language.
+ */
+export const PUBLISHED: readonly Locale[] = (published as string[]).map((l) => {
+  if (!isLocale(l)) throw new Error(`published.json lists unknown language "${l}"`);
+  return l;
+});
+
+/**
  * Picks a language from the browser's preferences. The browser's language says what
  * the reader reads; their location does not (a Spanish speaker in Canada, a traveller
  * abroad), and location would need a server this static site does not have.
  */
-export function fromBrowser(preferred: readonly string[]): Locale {
+export function fromBrowser(preferred: readonly string[], available: readonly Locale[] = PUBLISHED): Locale {
   for (const tag of preferred) {
     const [lang, ...rest] = tag.toLowerCase().split('-');
     if (lang === 'zh') {
       // Script decides which Chinese; regions that use traditional characters imply it.
-      return rest.some((p) => ['hant', 'tw', 'hk', 'mo'].includes(p)) ? 'zh-Hant' : 'zh-Hans';
+      const zh = rest.some((p) => ['hant', 'tw', 'hk', 'mo'].includes(p)) ? 'zh-Hant' : 'zh-Hans';
+      if (available.includes(zh)) return zh;
+      continue;
     }
-    if (lang === 'fil') return 'tl';
-    const hit = LOCALES.find((l) => l === lang);
+    const hit = available.find((l) => l === (lang === 'fil' ? 'tl' : lang));
     if (hit) return hit;
   }
   return 'en';
@@ -111,16 +126,20 @@ export function fromBrowser(preferred: readonly string[]): Locale {
 
 const KEY = 'pref:locale';
 
-/** An explicit ?lang= wins, then the reader's earlier choice, then the browser. */
+/**
+ * An explicit ?lang= wins (any built language, for reviewers), then the reader's
+ * earlier choice, then the browser. Only published languages are remembered, so a
+ * reviewer's preview never sticks as their everyday language.
+ */
 export function initialLocale(): Locale {
   const asked = new URLSearchParams(location.search).get('lang');
   if (isLocale(asked)) {
-    remember(asked);
+    if (PUBLISHED.includes(asked)) remember(asked);
     return asked;
   }
   try {
     const saved = localStorage.getItem(KEY);
-    if (isLocale(saved)) return saved;
+    if (isLocale(saved) && PUBLISHED.includes(saved)) return saved;
   } catch {
     /* storage blocked: fall through to the browser's languages */
   }

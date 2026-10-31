@@ -2,7 +2,7 @@ import { useEffect, useState, type FormEvent } from 'react';
 import { href, useRoute } from './lib/route';
 import { isolateRefs } from './lib/refs';
 import { I18nProvider, loadLocale, useI18n, type I18n } from './i18n/context';
-import { LOCALES, LOCALE_INFO, initialLocale, remember, type Locale } from './i18n/locales';
+import { LOCALES, LOCALE_INFO, PUBLISHED, initialLocale, remember, type Locale } from './i18n/locales';
 import Home from './views/Home';
 import Reader from './views/Reader';
 import Passage from './views/Passage';
@@ -78,15 +78,19 @@ function Site({ locale, choose }: { locale: Locale; choose: (l: Locale) => void 
             <a href={href.about()} aria-current={route.view === 'about' ? 'page' : undefined}>{t.nav.about}</a>
           </nav>
           <Lookup initial={route.view === 'passage' ? route.query : ''} />
-          <label className="language">
-            <span className="visually-hidden">{t.language}</span>
-            <select value={locale} onChange={(e) => choose(e.target.value as Locale)} aria-label={t.language}>
-              {LOCALES.map((l) => (
-                // Each name in its own language, so a reader can find theirs whatever the page is in.
-                <option key={l} value={l} lang={l}>{LOCALE_INFO[l].native}</option>
-              ))}
-            </select>
-          </label>
+          {/* Published languages only. A reviewer previewing a held-back one (?lang=)
+              gets every language, so they can compare; with one language, no menu. */}
+          {(PUBLISHED.includes(locale) ? PUBLISHED : LOCALES).length > 1 && (
+            <label className="language">
+              <span className="visually-hidden">{t.language}</span>
+              <select value={locale} onChange={(e) => choose(e.target.value as Locale)} aria-label={t.language}>
+                {(PUBLISHED.includes(locale) ? PUBLISHED : LOCALES).map((l) => (
+                  // Each name in its own language, so a reader can find theirs whatever the page is in.
+                  <option key={l} value={l} lang={l}>{LOCALE_INFO[l].native}</option>
+                ))}
+              </select>
+            </label>
+          )}
         </div>
       </header>
 

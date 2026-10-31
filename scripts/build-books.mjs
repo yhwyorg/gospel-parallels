@@ -27,11 +27,12 @@ try {
   const page = await browser.newPage();
   await page.goto(`${base}/?lang=en#/book`);
   await page.waitForSelector('body[data-book-ready="en"]');
-  const all = await page.$$eval('.language option', (os) => os.map((o) => o.value));
+  // Only published languages get a public PDF; held-back translations are not printed.
+  const all = JSON.parse(readFileSync(new URL('../src/i18n/published.json', import.meta.url), 'utf8'));
   // BOOK_LOCALES=en,fr builds just those, for a quick local check; CI builds every language.
   const only = process.env.BOOK_LOCALES?.split(',');
   const locales = only ? all.filter((l) => only.includes(l)) : all;
-  if (all.length < 2) throw new Error(`language menu lists ${all.length} languages`);
+  if (!all.includes('en')) throw new Error(`published.json lists ${JSON.stringify(all)}, without English`);
 
   for (const locale of locales) {
     const started = Date.now();

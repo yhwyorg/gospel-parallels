@@ -11,9 +11,12 @@ periods of the ministry and the days of the last week, and dashing any block a
 Gospel tells at a different point. The Book page has every section in one volume,
 to print or download as a PDF.
 
-The site is in eleven languages, each with a published translation of its own
-(below). It opens in the language the reader's browser asks for, and the menu in
-the header switches it; `?lang=es` in the address picks one directly.
+The site is built in eleven languages, each with a published translation of its
+own (below), but only those listed in `src/i18n/published.json` are offered to the
+public: currently English alone, until native speakers have reviewed the others.
+A published language is chosen from the reader's browser and offered in a menu;
+any built language can be previewed with `?lang=es` in the address, for review.
+Add a language to `published.json` to publish it (and its PDF).
 
 ## Run it
 

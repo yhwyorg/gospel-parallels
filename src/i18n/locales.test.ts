@@ -8,7 +8,7 @@ import { matcher, sharedWords } from '../lib/shared';
 import { BOOKS, foldName } from './books';
 import { assemble } from './context';
 import type { Dict } from './dict';
-import { LOCALES, LOCALE_INFO, fromBrowser } from './locales';
+import { LOCALES, LOCALE_INFO, PUBLISHED, fromBrowser } from './locales';
 import { aboutHelpers } from './helpers';
 
 const dicts = import.meta.glob<Dict>('./dict/*.tsx', { eager: true, import: 'default' });
@@ -45,7 +45,14 @@ describe('language detection', () => {
     [['fil-PH'], 'tl'],
     [['it-IT', 'fr-FR'], 'fr'],
     [['ja-JP'], 'en'],
-  ])('%j -> %s', (prefs, want) => expect(fromBrowser(prefs)).toBe(want));
+  ])('%j -> %s', (prefs, want) => expect(fromBrowser(prefs, LOCALES)).toBe(want));
+
+  it('offers only published languages to the public', () => {
+    // Unreviewed translations are held back; a Spanish browser gets the English site.
+    expect(fromBrowser(['es-MX'], ['en'])).toBe('en');
+    expect(fromBrowser(['zh-TW', 'fr'], ['en', 'fr'])).toBe('fr');
+    expect(PUBLISHED).toContain('en');
+  });
 });
 
 describe('book names', () => {
